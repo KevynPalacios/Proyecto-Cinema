@@ -32,7 +32,7 @@ public class Cliente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel2.setText("Nada, aqui chambeando");
+        jLabel2.setText("Que chingue a su madre el sebas, si o no?");
         getContentPane().add(jLabel2, java.awt.BorderLayout.CENTER);
 
         pack();
