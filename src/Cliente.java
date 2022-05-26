@@ -9,7 +9,7 @@
  */
 public class Cliente extends javax.swing.JFrame {
 
-    /**
+    /**Hola
      * Creates new form Cliente
      */
     public Cliente() {
