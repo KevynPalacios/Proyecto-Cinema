@@ -1,9 +1,10 @@
 
 public class Cliente extends javax.swing.JFrame {
-
+    
+    Principal principal = new Principal();
     public Cliente() {
         initComponents();
-        
+        add(principal);
     }
 
     @SuppressWarnings("unchecked")
@@ -11,11 +12,6 @@ public class Cliente extends javax.swing.JFrame {
     private void initComponents() {
 
         jTextField1 = new javax.swing.JTextField();
-        jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -23,21 +19,6 @@ public class Cliente extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(1280, 720));
         setMinimumSize(new java.awt.Dimension(1280, 720));
         setPreferredSize(new java.awt.Dimension(1280, 720));
-        getContentPane().setLayout(null);
-
-        jPanel1.setBackground(new java.awt.Color(153, 0, 0));
-        jPanel1.setLayout(null);
-        jPanel1.add(jButton1);
-        jButton1.setBounds(680, 60, 160, 300);
-        jPanel1.add(jButton2);
-        jButton2.setBounds(110, 60, 160, 300);
-        jPanel1.add(jButton3);
-        jButton3.setBounds(300, 60, 160, 300);
-        jPanel1.add(jButton4);
-        jButton4.setBounds(490, 60, 160, 300);
-
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 940, 430);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -71,11 +52,6 @@ public class Cliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
