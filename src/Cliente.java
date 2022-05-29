@@ -9,6 +9,7 @@ public class Cliente extends javax.swing.JFrame {
     private Icon icono;
 
     public Cliente() {
+        this.setTitle("Catalogo");
         initComponents();
         this.setSize(catalogo.getSize());
         this.pintarImagen(this.jButton1, "src/img/PortadaDS2.jpg");
@@ -29,13 +30,15 @@ public class Cliente extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         label1 = new javax.swing.JLabel();
         formulario = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -105,89 +108,76 @@ public class Cliente extends javax.swing.JFrame {
         getContentPane().add(catalogo);
         catalogo.setBounds(0, 0, 1280, 720);
 
-        formulario.setMaximumSize(new java.awt.Dimension(800, 600));
-        formulario.setMinimumSize(new java.awt.Dimension(800, 600));
-        formulario.setPreferredSize(new java.awt.Dimension(800, 300));
+        formulario.setMaximumSize(new java.awt.Dimension(633, 763));
+        formulario.setMinimumSize(new java.awt.Dimension(633, 763));
+        formulario.setName(""); // NOI18N
+        formulario.setPreferredSize(new java.awt.Dimension(633, 763));
+        formulario.setLayout(null);
 
-        jPanel3.setBackground(new java.awt.Color(30, 160, 250));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 204), new java.awt.Color(153, 153, 153)));
+        jPanel1.setMaximumSize(new java.awt.Dimension(515, 677));
+        jPanel1.setLayout(null);
 
-        jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Cine");
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel3.setFont(new java.awt.Font("Georgia", 1, 48)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Cinema");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(0, 140, 510, 50);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-        );
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/crop logo 110.jpg"))); // NOI18N
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(-2, 48, 510, 95);
 
-        jPanel1.setBackground(new java.awt.Color(251, 248, 248));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos del pedido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), javax.swing.UIManager.getDefaults().getColor("Actions.Blue"))); // NOI18N
+        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel4.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Datos de la orden");
+        jPanel1.add(jLabel4);
+        jLabel4.setBounds(0, 240, 510, 40);
 
-        jLabel1.setText("Nombre");
+        jSeparator1.setForeground(new java.awt.Color(153, 153, 153));
+        jSeparator1.setToolTipText("");
+        jSeparator1.setName(""); // NOI18N
+        jPanel1.add(jSeparator1);
+        jSeparator1.setBounds(270, 310, 140, 20);
+        jSeparator1.getAccessibleContext().setAccessibleName("");
 
-        jLabel2.setText("Cantidad");
+        jSeparator2.setForeground(new java.awt.Color(153, 153, 153));
+        jSeparator2.setToolTipText("");
+        jSeparator2.setName(""); // NOI18N
+        jPanel1.add(jSeparator2);
+        jSeparator2.setBounds(100, 310, 140, 20);
 
-        jLabel4.setText("Horario");
+        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("o");
+        jPanel1.add(jLabel5);
+        jLabel5.setBounds(250, 300, 10, 16);
 
-        jLabel5.setText("Nombre");
+        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField1.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextField1.setToolTipText("");
+        jTextField1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 204), new java.awt.Color(153, 153, 153)));
+        jPanel1.add(jTextField1);
+        jTextField1.setBounds(100, 340, 310, 40);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(639, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
-                .addContainerGap(83, Short.MAX_VALUE))
-        );
+        formulario.add(jPanel1);
+        jPanel1.setBounds(60, 30, 510, 677);
 
-        javax.swing.GroupLayout formularioLayout = new javax.swing.GroupLayout(formulario);
-        formulario.setLayout(formularioLayout);
-        formularioLayout.setHorizontalGroup(
-            formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(formularioLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
-        );
-        formularioLayout.setVerticalGroup(
-            formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(formularioLayout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 325, Short.MAX_VALUE))
-        );
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/FondoForm.jpg"))); // NOI18N
+        formulario.add(jLabel1);
+        jLabel1.setBounds(0, 0, 630, 760);
 
         getContentPane().add(formulario);
-        formulario.setBounds(0, 0, 1280, 720);
+        formulario.setBounds(0, 0, 633, 763);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -227,7 +217,9 @@ public class Cliente extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         catalogo.setVisible(false);
         formulario.setVisible(true);
-        this.setSize(800,400);
+        this.setSize(633,763);
+        this.setTitle("Formulario");
+        this.setLocationRelativeTo(null);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {
@@ -281,7 +273,9 @@ public class Cliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel label1;
     // End of variables declaration//GEN-END:variables
 }
