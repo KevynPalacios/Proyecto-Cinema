@@ -10,10 +10,10 @@ public class Principal extends javax.swing.JPanel {
 
     public Principal() {
         initComponents();
-        this.pintarImagen(this.jButton1, "src/PortadaDS2.jpg");
-        this.pintarImagen(this.jButton2, "src/PortadaMorb.jpg");
-        this.pintarImagen(this.jButton3, "src/PortadaX.jpg");
-        this.pintarImagen(this.jButton4, "src/PortadaBat.jpg");
+        this.pintarImagen(this.jButton1, "src/img/PortadaDS2.jpg");
+        this.pintarImagen(this.jButton2, "src/img/PortadaMorb.jpg");
+        this.pintarImagen(this.jButton3, "src/img/PortadaX.jpg");
+        this.pintarImagen(this.jButton4, "src/img/PortadaBat.jpg");
     }
 
     @SuppressWarnings("unchecked")
@@ -45,23 +45,90 @@ public class Principal extends javax.swing.JPanel {
         catalogo.setLayout(null);
 
         jButton1.setText("jButton1");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton1MouseExited(evt);
+            }
+        });
         catalogo.add(jButton1);
         jButton1.setBounds(20, 10, 301, 470);
 
         jButton3.setText("jButton3");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton3MouseExited(evt);
+            }
+        });
         catalogo.add(jButton3);
         jButton3.setBounds(640, 10, 300, 470);
 
         jButton2.setText("jButton2");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton2MouseExited(evt);
+            }
+        });
         catalogo.add(jButton2);
         jButton2.setBounds(330, 10, 300, 470);
 
         jButton4.setText("jButton4");
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton4MouseExited(evt);
+            }
+        });
         catalogo.add(jButton4);
         jButton4.setBounds(950, 10, 300, 470);
 
         add(catalogo, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
+        jButton1.setBounds(20, 0, 301, 470);
+    }//GEN-LAST:event_jButton1MouseEntered
+    private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited
+        jButton1.setBounds(20, 10, 301, 470);
+    }//GEN-LAST:event_jButton1MouseExited
+    private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
+        jButton2.setBounds(330, 0, 300, 470);
+    }//GEN-LAST:event_jButton2MouseEntered
+    private void jButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseExited
+        jButton2.setBounds(330, 10, 300, 470);
+    }//GEN-LAST:event_jButton2MouseExited
+    private void jButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseEntered
+        jButton3.setBounds(640, 0, 300, 470);
+    }//GEN-LAST:event_jButton3MouseEntered
+    private void jButton3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseExited
+        jButton3.setBounds(640, 10, 300, 470);
+    }//GEN-LAST:event_jButton3MouseExited
+    private void jButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseEntered
+        jButton4.setBounds(950, 0, 300, 470);
+    }//GEN-LAST:event_jButton4MouseEntered
+    private void jButton4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseExited
+        jButton4.setBounds(950, 10, 300, 470);
+    }//GEN-LAST:event_jButton4MouseExited
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel catalogo;
+    private javax.swing.JPanel header;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel label1;
+    // End of variables declaration//GEN-END:variables
 
     private void pintarImagen(JButton btn, String ruta) {
         this.imagen = new ImageIcon(ruta);
@@ -74,14 +141,4 @@ public class Principal extends javax.swing.JPanel {
         btn.setFocusPainted(false);
         this.repaint();
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel catalogo;
-    private javax.swing.JPanel header;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JLabel label1;
-    // End of variables declaration//GEN-END:variables
 }

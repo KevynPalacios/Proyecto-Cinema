@@ -6,6 +6,7 @@ public class Cliente extends javax.swing.JFrame {
     public Cliente() {
         initComponents();
         add(principal);
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
