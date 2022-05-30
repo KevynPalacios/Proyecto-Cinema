@@ -3,6 +3,7 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.logging.*;
+import javax.swing.JButton;
 
 public class Servidor {
 
@@ -41,7 +42,7 @@ public class Servidor {
                 
                 int inCantidad = in.read();
                 System.out.println(inCantidad);
-                
+
                 
                 sc.close();
                 System.out.println("Cliente desconectado...");
