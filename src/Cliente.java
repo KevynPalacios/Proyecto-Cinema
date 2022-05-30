@@ -21,7 +21,10 @@
 
 import java.awt.Color;
 import static java.awt.Image.SCALE_SMOOTH;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -30,18 +33,31 @@ public class Cliente extends javax.swing.JFrame {
 
     private ImageIcon imagen;
     private Icon icono;
+    static final int PUERTO = 3000;
+    static DataInputStream in;
+    static DataOutputStream out;
+    static Socket sc;
 
     public Cliente() {
-        initComponents();
-        formulario.setVisible(false);
-        catalogo.setVisible(true);
-        this.setTitle("Catalogo");
-        this.setSize(1280, 750);
-        this.pintarImagen(this.jButton1, "src/img/PortadaDS2.jpg");
-        this.pintarImagen(this.jButton2, "src/img/PortadaMorb.jpg");
-        this.pintarImagen(this.jButton3, "src/img/PortadaX.jpg");
-        this.pintarImagen(this.jButton4, "src/img/PortadaBat.jpg");
-        this.setLocationRelativeTo(null);
+
+        try {
+            initComponents();
+            formulario.setVisible(false);
+            catalogo.setVisible(true);
+            this.setTitle("Catalogo");
+            this.setSize(1280, 750);
+            this.pintarImagen(this.jButton1, "src/img/PortadaDS2.jpg");
+            this.pintarImagen(this.jButton2, "src/img/PortadaMorb.jpg");
+            this.pintarImagen(this.jButton3, "src/img/PortadaX.jpg");
+            this.pintarImagen(this.jButton4, "src/img/PortadaBat.jpg");
+            this.setLocationRelativeTo(null);
+
+            sc = new Socket("localhost", PUERTO);
+            out = new DataOutputStream(sc.getOutputStream());
+
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -576,448 +592,453 @@ public class Cliente extends javax.swing.JFrame {
         jButton20.setForeground(new java.awt.Color(255, 255, 255));
         jButton20.setText("1");
         jPanel2.add(jButton20);
-        jButton20.setBounds(140, 340, 20, 16);
+        jButton20.setBounds(100, 330, 40, 30);
 
         jButton21.setBackground(new java.awt.Color(0, 153, 204));
         jButton21.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton21.setForeground(new java.awt.Color(255, 255, 255));
         jButton21.setText("2");
         jPanel2.add(jButton21);
-        jButton21.setBounds(170, 340, 20, 16);
+        jButton21.setBounds(140, 330, 40, 30);
 
         jButton22.setBackground(new java.awt.Color(0, 153, 204));
         jButton22.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton22.setForeground(new java.awt.Color(255, 255, 255));
         jButton22.setText("3");
         jPanel2.add(jButton22);
-        jButton22.setBounds(200, 340, 20, 16);
+        jButton22.setBounds(180, 330, 40, 30);
 
         jButton23.setBackground(new java.awt.Color(0, 153, 204));
         jButton23.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton23.setForeground(new java.awt.Color(255, 255, 255));
         jButton23.setText("4");
         jPanel2.add(jButton23);
-        jButton23.setBounds(230, 340, 20, 16);
+        jButton23.setBounds(220, 330, 40, 30);
 
         jButton24.setBackground(new java.awt.Color(0, 153, 204));
         jButton24.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton24.setForeground(new java.awt.Color(255, 255, 255));
         jButton24.setText("5");
         jPanel2.add(jButton24);
-        jButton24.setBounds(260, 340, 20, 16);
+        jButton24.setBounds(260, 330, 40, 30);
 
         jButton25.setBackground(new java.awt.Color(0, 153, 204));
         jButton25.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton25.setForeground(new java.awt.Color(255, 255, 255));
         jButton25.setText("6");
         jPanel2.add(jButton25);
-        jButton25.setBounds(290, 340, 20, 16);
+        jButton25.setBounds(300, 330, 40, 30);
 
         jButton26.setBackground(new java.awt.Color(0, 153, 204));
         jButton26.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton26.setForeground(new java.awt.Color(255, 255, 255));
         jButton26.setText("7");
         jPanel2.add(jButton26);
-        jButton26.setBounds(320, 340, 20, 16);
+        jButton26.setBounds(340, 330, 40, 30);
 
         jButton27.setBackground(new java.awt.Color(0, 153, 204));
         jButton27.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton27.setForeground(new java.awt.Color(255, 255, 255));
         jButton27.setText("8");
+        jButton27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton27ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButton27);
-        jButton27.setBounds(350, 340, 20, 16);
+        jButton27.setBounds(380, 330, 40, 30);
 
         jButton29.setBackground(new java.awt.Color(0, 153, 204));
         jButton29.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton29.setForeground(new java.awt.Color(255, 255, 255));
         jButton29.setText("1");
         jPanel2.add(jButton29);
-        jButton29.setBounds(140, 370, 20, 16);
+        jButton29.setBounds(100, 360, 40, 30);
 
         jButton30.setBackground(new java.awt.Color(0, 153, 204));
         jButton30.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton30.setForeground(new java.awt.Color(255, 255, 255));
         jButton30.setText("2");
         jPanel2.add(jButton30);
-        jButton30.setBounds(170, 370, 20, 16);
+        jButton30.setBounds(140, 360, 40, 30);
 
         jButton31.setBackground(new java.awt.Color(0, 153, 204));
         jButton31.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton31.setForeground(new java.awt.Color(255, 255, 255));
         jButton31.setText("3");
         jPanel2.add(jButton31);
-        jButton31.setBounds(200, 370, 20, 16);
+        jButton31.setBounds(180, 360, 40, 30);
 
         jButton32.setBackground(new java.awt.Color(0, 153, 204));
         jButton32.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton32.setForeground(new java.awt.Color(255, 255, 255));
         jButton32.setText("4");
         jPanel2.add(jButton32);
-        jButton32.setBounds(230, 370, 20, 16);
+        jButton32.setBounds(220, 360, 40, 30);
 
         jButton33.setBackground(new java.awt.Color(0, 153, 204));
         jButton33.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton33.setForeground(new java.awt.Color(255, 255, 255));
         jButton33.setText("5");
         jPanel2.add(jButton33);
-        jButton33.setBounds(260, 370, 20, 16);
+        jButton33.setBounds(260, 360, 40, 30);
 
         jButton34.setBackground(new java.awt.Color(0, 153, 204));
         jButton34.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton34.setForeground(new java.awt.Color(255, 255, 255));
         jButton34.setText("6");
         jPanel2.add(jButton34);
-        jButton34.setBounds(290, 370, 20, 16);
+        jButton34.setBounds(300, 360, 40, 30);
 
         jButton35.setBackground(new java.awt.Color(0, 153, 204));
         jButton35.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton35.setForeground(new java.awt.Color(255, 255, 255));
         jButton35.setText("7");
         jPanel2.add(jButton35);
-        jButton35.setBounds(320, 370, 20, 16);
+        jButton35.setBounds(340, 360, 40, 30);
 
         jButton36.setBackground(new java.awt.Color(0, 153, 204));
         jButton36.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton36.setForeground(new java.awt.Color(255, 255, 255));
         jButton36.setText("8");
         jPanel2.add(jButton36);
-        jButton36.setBounds(350, 370, 20, 16);
+        jButton36.setBounds(380, 360, 40, 30);
 
         jButton38.setBackground(new java.awt.Color(0, 153, 204));
         jButton38.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton38.setForeground(new java.awt.Color(255, 255, 255));
         jButton38.setText("1");
         jPanel2.add(jButton38);
-        jButton38.setBounds(140, 400, 20, 16);
+        jButton38.setBounds(100, 390, 40, 30);
 
         jButton39.setBackground(new java.awt.Color(0, 153, 204));
         jButton39.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton39.setForeground(new java.awt.Color(255, 255, 255));
         jButton39.setText("2");
         jPanel2.add(jButton39);
-        jButton39.setBounds(170, 400, 20, 16);
+        jButton39.setBounds(140, 390, 40, 30);
 
         jButton40.setBackground(new java.awt.Color(0, 153, 204));
         jButton40.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton40.setForeground(new java.awt.Color(255, 255, 255));
         jButton40.setText("3");
         jPanel2.add(jButton40);
-        jButton40.setBounds(200, 400, 20, 16);
+        jButton40.setBounds(180, 390, 40, 30);
 
         jButton41.setBackground(new java.awt.Color(0, 153, 204));
         jButton41.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton41.setForeground(new java.awt.Color(255, 255, 255));
         jButton41.setText("4");
         jPanel2.add(jButton41);
-        jButton41.setBounds(230, 400, 20, 16);
+        jButton41.setBounds(220, 390, 40, 30);
 
         jButton42.setBackground(new java.awt.Color(0, 153, 204));
         jButton42.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton42.setForeground(new java.awt.Color(255, 255, 255));
         jButton42.setText("5");
         jPanel2.add(jButton42);
-        jButton42.setBounds(260, 400, 20, 16);
+        jButton42.setBounds(260, 390, 40, 30);
 
         jButton43.setBackground(new java.awt.Color(0, 153, 204));
         jButton43.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton43.setForeground(new java.awt.Color(255, 255, 255));
         jButton43.setText("6");
         jPanel2.add(jButton43);
-        jButton43.setBounds(290, 400, 20, 16);
+        jButton43.setBounds(300, 390, 40, 30);
 
         jButton44.setBackground(new java.awt.Color(0, 153, 204));
         jButton44.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton44.setForeground(new java.awt.Color(255, 255, 255));
         jButton44.setText("7");
         jPanel2.add(jButton44);
-        jButton44.setBounds(320, 400, 20, 16);
+        jButton44.setBounds(340, 390, 40, 30);
 
         jButton45.setBackground(new java.awt.Color(0, 153, 204));
         jButton45.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton45.setForeground(new java.awt.Color(255, 255, 255));
         jButton45.setText("8");
         jPanel2.add(jButton45);
-        jButton45.setBounds(350, 400, 20, 16);
+        jButton45.setBounds(380, 390, 40, 30);
 
         jButton47.setBackground(new java.awt.Color(0, 153, 204));
         jButton47.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton47.setForeground(new java.awt.Color(255, 255, 255));
         jButton47.setText("1");
         jPanel2.add(jButton47);
-        jButton47.setBounds(140, 430, 20, 16);
+        jButton47.setBounds(100, 420, 40, 30);
 
         jButton48.setBackground(new java.awt.Color(0, 153, 204));
         jButton48.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton48.setForeground(new java.awt.Color(255, 255, 255));
         jButton48.setText("2");
         jPanel2.add(jButton48);
-        jButton48.setBounds(170, 430, 20, 16);
+        jButton48.setBounds(140, 420, 40, 30);
 
         jButton49.setBackground(new java.awt.Color(0, 153, 204));
         jButton49.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton49.setForeground(new java.awt.Color(255, 255, 255));
         jButton49.setText("3");
         jPanel2.add(jButton49);
-        jButton49.setBounds(200, 430, 20, 16);
+        jButton49.setBounds(180, 420, 40, 30);
 
         jButton50.setBackground(new java.awt.Color(0, 153, 204));
         jButton50.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton50.setForeground(new java.awt.Color(255, 255, 255));
         jButton50.setText("4");
         jPanel2.add(jButton50);
-        jButton50.setBounds(230, 430, 20, 16);
+        jButton50.setBounds(220, 420, 40, 30);
 
         jButton51.setBackground(new java.awt.Color(0, 153, 204));
         jButton51.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton51.setForeground(new java.awt.Color(255, 255, 255));
         jButton51.setText("5");
         jPanel2.add(jButton51);
-        jButton51.setBounds(260, 430, 20, 16);
+        jButton51.setBounds(260, 420, 40, 30);
 
         jButton52.setBackground(new java.awt.Color(0, 153, 204));
         jButton52.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton52.setForeground(new java.awt.Color(255, 255, 255));
         jButton52.setText("6");
         jPanel2.add(jButton52);
-        jButton52.setBounds(290, 430, 20, 16);
+        jButton52.setBounds(300, 420, 40, 30);
 
         jButton53.setBackground(new java.awt.Color(0, 153, 204));
         jButton53.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton53.setForeground(new java.awt.Color(255, 255, 255));
         jButton53.setText("7");
         jPanel2.add(jButton53);
-        jButton53.setBounds(320, 430, 20, 16);
+        jButton53.setBounds(340, 420, 40, 30);
 
         jButton54.setBackground(new java.awt.Color(0, 153, 204));
         jButton54.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton54.setForeground(new java.awt.Color(255, 255, 255));
         jButton54.setText("8");
         jPanel2.add(jButton54);
-        jButton54.setBounds(350, 430, 20, 16);
+        jButton54.setBounds(380, 420, 40, 30);
 
         jButton56.setBackground(new java.awt.Color(0, 153, 204));
         jButton56.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton56.setForeground(new java.awt.Color(255, 255, 255));
         jButton56.setText("1");
         jPanel2.add(jButton56);
-        jButton56.setBounds(140, 460, 20, 16);
+        jButton56.setBounds(100, 450, 40, 30);
 
         jButton57.setBackground(new java.awt.Color(0, 153, 204));
         jButton57.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton57.setForeground(new java.awt.Color(255, 255, 255));
         jButton57.setText("2");
         jPanel2.add(jButton57);
-        jButton57.setBounds(170, 460, 20, 16);
+        jButton57.setBounds(140, 450, 40, 30);
 
         jButton58.setBackground(new java.awt.Color(0, 153, 204));
         jButton58.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton58.setForeground(new java.awt.Color(255, 255, 255));
         jButton58.setText("3");
         jPanel2.add(jButton58);
-        jButton58.setBounds(200, 460, 20, 16);
+        jButton58.setBounds(180, 450, 40, 30);
 
         jButton59.setBackground(new java.awt.Color(0, 153, 204));
         jButton59.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton59.setForeground(new java.awt.Color(255, 255, 255));
         jButton59.setText("4");
         jPanel2.add(jButton59);
-        jButton59.setBounds(230, 460, 20, 16);
+        jButton59.setBounds(220, 450, 40, 30);
 
         jButton60.setBackground(new java.awt.Color(0, 153, 204));
         jButton60.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton60.setForeground(new java.awt.Color(255, 255, 255));
         jButton60.setText("5");
         jPanel2.add(jButton60);
-        jButton60.setBounds(260, 460, 20, 16);
+        jButton60.setBounds(260, 450, 40, 30);
 
         jButton61.setBackground(new java.awt.Color(0, 153, 204));
         jButton61.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton61.setForeground(new java.awt.Color(255, 255, 255));
         jButton61.setText("6");
         jPanel2.add(jButton61);
-        jButton61.setBounds(290, 460, 20, 16);
+        jButton61.setBounds(300, 450, 40, 30);
 
         jButton62.setBackground(new java.awt.Color(0, 153, 204));
         jButton62.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton62.setForeground(new java.awt.Color(255, 255, 255));
         jButton62.setText("7");
         jPanel2.add(jButton62);
-        jButton62.setBounds(320, 460, 20, 16);
+        jButton62.setBounds(340, 450, 40, 30);
 
         jButton63.setBackground(new java.awt.Color(0, 153, 204));
         jButton63.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton63.setForeground(new java.awt.Color(255, 255, 255));
         jButton63.setText("8");
         jPanel2.add(jButton63);
-        jButton63.setBounds(350, 460, 20, 16);
+        jButton63.setBounds(380, 450, 40, 30);
 
         jButton65.setBackground(new java.awt.Color(0, 153, 204));
         jButton65.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton65.setForeground(new java.awt.Color(255, 255, 255));
         jButton65.setText("1");
         jPanel2.add(jButton65);
-        jButton65.setBounds(140, 490, 20, 16);
+        jButton65.setBounds(100, 480, 40, 30);
 
         jButton66.setBackground(new java.awt.Color(0, 153, 204));
         jButton66.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton66.setForeground(new java.awt.Color(255, 255, 255));
         jButton66.setText("2");
         jPanel2.add(jButton66);
-        jButton66.setBounds(170, 490, 20, 16);
+        jButton66.setBounds(140, 480, 40, 30);
 
         jButton67.setBackground(new java.awt.Color(0, 153, 204));
         jButton67.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton67.setForeground(new java.awt.Color(255, 255, 255));
         jButton67.setText("3");
         jPanel2.add(jButton67);
-        jButton67.setBounds(200, 490, 20, 16);
+        jButton67.setBounds(180, 480, 40, 30);
 
         jButton68.setBackground(new java.awt.Color(0, 153, 204));
         jButton68.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton68.setForeground(new java.awt.Color(255, 255, 255));
         jButton68.setText("4");
         jPanel2.add(jButton68);
-        jButton68.setBounds(230, 490, 20, 16);
+        jButton68.setBounds(220, 480, 40, 30);
 
         jButton69.setBackground(new java.awt.Color(0, 153, 204));
         jButton69.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton69.setForeground(new java.awt.Color(255, 255, 255));
         jButton69.setText("5");
         jPanel2.add(jButton69);
-        jButton69.setBounds(260, 490, 20, 16);
+        jButton69.setBounds(260, 480, 40, 30);
 
         jButton70.setBackground(new java.awt.Color(0, 153, 204));
         jButton70.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton70.setForeground(new java.awt.Color(255, 255, 255));
         jButton70.setText("6");
         jPanel2.add(jButton70);
-        jButton70.setBounds(290, 490, 20, 16);
+        jButton70.setBounds(300, 480, 40, 30);
 
         jButton71.setBackground(new java.awt.Color(0, 153, 204));
         jButton71.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton71.setForeground(new java.awt.Color(255, 255, 255));
         jButton71.setText("7");
         jPanel2.add(jButton71);
-        jButton71.setBounds(320, 490, 20, 16);
+        jButton71.setBounds(340, 480, 40, 30);
 
         jButton72.setBackground(new java.awt.Color(0, 153, 204));
         jButton72.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton72.setForeground(new java.awt.Color(255, 255, 255));
         jButton72.setText("8");
         jPanel2.add(jButton72);
-        jButton72.setBounds(350, 490, 20, 16);
+        jButton72.setBounds(380, 480, 40, 30);
 
         jButton74.setBackground(new java.awt.Color(0, 153, 204));
         jButton74.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton74.setForeground(new java.awt.Color(255, 255, 255));
         jButton74.setText("1");
         jPanel2.add(jButton74);
-        jButton74.setBounds(140, 520, 20, 16);
+        jButton74.setBounds(100, 510, 40, 30);
 
         jButton75.setBackground(new java.awt.Color(0, 153, 204));
         jButton75.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton75.setForeground(new java.awt.Color(255, 255, 255));
         jButton75.setText("2");
         jPanel2.add(jButton75);
-        jButton75.setBounds(170, 520, 20, 16);
+        jButton75.setBounds(140, 510, 40, 30);
 
         jButton76.setBackground(new java.awt.Color(0, 153, 204));
         jButton76.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton76.setForeground(new java.awt.Color(255, 255, 255));
         jButton76.setText("3");
         jPanel2.add(jButton76);
-        jButton76.setBounds(200, 520, 20, 16);
+        jButton76.setBounds(180, 510, 40, 30);
 
         jButton77.setBackground(new java.awt.Color(0, 153, 204));
         jButton77.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton77.setForeground(new java.awt.Color(255, 255, 255));
         jButton77.setText("4");
         jPanel2.add(jButton77);
-        jButton77.setBounds(230, 520, 20, 16);
+        jButton77.setBounds(220, 510, 40, 30);
 
         jButton78.setBackground(new java.awt.Color(0, 153, 204));
         jButton78.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton78.setForeground(new java.awt.Color(255, 255, 255));
         jButton78.setText("5");
         jPanel2.add(jButton78);
-        jButton78.setBounds(260, 520, 20, 16);
+        jButton78.setBounds(260, 510, 40, 30);
 
         jButton79.setBackground(new java.awt.Color(0, 153, 204));
         jButton79.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton79.setForeground(new java.awt.Color(255, 255, 255));
         jButton79.setText("6");
         jPanel2.add(jButton79);
-        jButton79.setBounds(290, 520, 20, 16);
+        jButton79.setBounds(300, 510, 40, 30);
 
         jButton80.setBackground(new java.awt.Color(0, 153, 204));
         jButton80.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton80.setForeground(new java.awt.Color(255, 255, 255));
         jButton80.setText("7");
         jPanel2.add(jButton80);
-        jButton80.setBounds(320, 520, 20, 16);
+        jButton80.setBounds(340, 510, 40, 30);
 
         jButton81.setBackground(new java.awt.Color(0, 153, 204));
         jButton81.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton81.setForeground(new java.awt.Color(255, 255, 255));
         jButton81.setText("8");
         jPanel2.add(jButton81);
-        jButton81.setBounds(350, 520, 20, 16);
+        jButton81.setBounds(380, 510, 40, 30);
 
         jButton83.setBackground(new java.awt.Color(0, 153, 204));
         jButton83.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton83.setForeground(new java.awt.Color(255, 255, 255));
         jButton83.setText("1");
         jPanel2.add(jButton83);
-        jButton83.setBounds(140, 550, 20, 16);
+        jButton83.setBounds(100, 540, 40, 30);
 
         jButton84.setBackground(new java.awt.Color(0, 153, 204));
         jButton84.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton84.setForeground(new java.awt.Color(255, 255, 255));
         jButton84.setText("2");
         jPanel2.add(jButton84);
-        jButton84.setBounds(170, 550, 20, 16);
+        jButton84.setBounds(140, 540, 40, 30);
 
         jButton85.setBackground(new java.awt.Color(0, 153, 204));
         jButton85.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton85.setForeground(new java.awt.Color(255, 255, 255));
         jButton85.setText("3");
         jPanel2.add(jButton85);
-        jButton85.setBounds(200, 550, 20, 16);
+        jButton85.setBounds(180, 540, 40, 30);
 
         jButton86.setBackground(new java.awt.Color(0, 153, 204));
         jButton86.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton86.setForeground(new java.awt.Color(255, 255, 255));
         jButton86.setText("4");
         jPanel2.add(jButton86);
-        jButton86.setBounds(230, 550, 20, 16);
+        jButton86.setBounds(220, 540, 40, 30);
 
         jButton87.setBackground(new java.awt.Color(0, 153, 204));
         jButton87.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton87.setForeground(new java.awt.Color(255, 255, 255));
         jButton87.setText("5");
         jPanel2.add(jButton87);
-        jButton87.setBounds(260, 550, 20, 16);
+        jButton87.setBounds(260, 540, 40, 30);
 
         jButton88.setBackground(new java.awt.Color(0, 153, 204));
         jButton88.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton88.setForeground(new java.awt.Color(255, 255, 255));
         jButton88.setText("6");
         jPanel2.add(jButton88);
-        jButton88.setBounds(290, 550, 20, 16);
+        jButton88.setBounds(300, 540, 40, 30);
 
         jButton89.setBackground(new java.awt.Color(0, 153, 204));
         jButton89.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton89.setForeground(new java.awt.Color(255, 255, 255));
         jButton89.setText("7");
         jPanel2.add(jButton89);
-        jButton89.setBounds(320, 550, 20, 16);
+        jButton89.setBounds(340, 540, 40, 30);
 
         jButton90.setBackground(new java.awt.Color(0, 153, 204));
         jButton90.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
         jButton90.setForeground(new java.awt.Color(255, 255, 255));
         jButton90.setText("8");
         jPanel2.add(jButton90);
-        jButton90.setBounds(350, 550, 20, 16);
+        jButton90.setBounds(380, 540, 40, 30);
 
         jLabel18.setBackground(new java.awt.Color(255, 255, 255));
         jLabel18.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -1158,13 +1179,21 @@ public class Cliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4MouseExited
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        catalogo.setVisible(false);
-        formulario.setVisible(true);
-        jPanel2.setVisible(false);
-        jPanel1.setVisible(true);
-        this.setSize(633, 763);
-        this.setTitle("Formulario");
-        this.setLocationRelativeTo(null);
+
+        try {
+            out.write(1);
+            out.writeUTF("Doctor Strange");
+
+            catalogo.setVisible(false);
+            formulario.setVisible(true);
+            jPanel2.setVisible(false);
+            jPanel1.setVisible(true);
+            this.setSize(633, 763);
+            this.setTitle("Formulario");
+            this.setLocationRelativeTo(null);
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MousePressed
@@ -1226,15 +1255,26 @@ public class Cliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        jPanel1.setVisible(false);
-        jPanel2.setVisible(true);
+        try {
+            out.writeUTF(jTextField1.getText());
+            out.write(Integer.parseInt(jTextField3.getText()));
+
+            jPanel1.setVisible(false);
+            jPanel2.setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    public static void main(String args[]) {
+    private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
+
+    }//GEN-LAST:event_jButton27ActionPerformed
+
+    public static void main(String[] args) {
 
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -1273,127 +1313,127 @@ public class Cliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel catalogo;
-    private javax.swing.JPanel formulario;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton19;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton20;
-    private javax.swing.JButton jButton21;
-    private javax.swing.JButton jButton22;
-    private javax.swing.JButton jButton23;
-    private javax.swing.JButton jButton24;
-    private javax.swing.JButton jButton25;
-    private javax.swing.JButton jButton26;
-    private javax.swing.JButton jButton27;
-    private javax.swing.JButton jButton29;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton30;
-    private javax.swing.JButton jButton31;
-    private javax.swing.JButton jButton32;
-    private javax.swing.JButton jButton33;
-    private javax.swing.JButton jButton34;
-    private javax.swing.JButton jButton35;
-    private javax.swing.JButton jButton36;
-    private javax.swing.JButton jButton38;
-    private javax.swing.JButton jButton39;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton40;
-    private javax.swing.JButton jButton41;
-    private javax.swing.JButton jButton42;
-    private javax.swing.JButton jButton43;
-    private javax.swing.JButton jButton44;
-    private javax.swing.JButton jButton45;
-    private javax.swing.JButton jButton47;
-    private javax.swing.JButton jButton48;
-    private javax.swing.JButton jButton49;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton50;
-    private javax.swing.JButton jButton51;
-    private javax.swing.JButton jButton52;
-    private javax.swing.JButton jButton53;
-    private javax.swing.JButton jButton54;
-    private javax.swing.JButton jButton56;
-    private javax.swing.JButton jButton57;
-    private javax.swing.JButton jButton58;
-    private javax.swing.JButton jButton59;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton60;
-    private javax.swing.JButton jButton61;
-    private javax.swing.JButton jButton62;
-    private javax.swing.JButton jButton63;
-    private javax.swing.JButton jButton65;
-    private javax.swing.JButton jButton66;
-    private javax.swing.JButton jButton67;
-    private javax.swing.JButton jButton68;
-    private javax.swing.JButton jButton69;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton70;
-    private javax.swing.JButton jButton71;
-    private javax.swing.JButton jButton72;
-    private javax.swing.JButton jButton74;
-    private javax.swing.JButton jButton75;
-    private javax.swing.JButton jButton76;
-    private javax.swing.JButton jButton77;
-    private javax.swing.JButton jButton78;
-    private javax.swing.JButton jButton79;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton80;
-    private javax.swing.JButton jButton81;
-    private javax.swing.JButton jButton83;
-    private javax.swing.JButton jButton84;
-    private javax.swing.JButton jButton85;
-    private javax.swing.JButton jButton86;
-    private javax.swing.JButton jButton87;
-    private javax.swing.JButton jButton88;
-    private javax.swing.JButton jButton89;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JButton jButton90;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JLabel label1;
+    private static javax.swing.JPanel catalogo;
+    private static javax.swing.JPanel formulario;
+    private static javax.swing.JButton jButton1;
+    private static javax.swing.JButton jButton10;
+    private static javax.swing.JButton jButton11;
+    private static javax.swing.JButton jButton12;
+    private static javax.swing.JButton jButton13;
+    private static javax.swing.JButton jButton14;
+    private static javax.swing.JButton jButton15;
+    private static javax.swing.JButton jButton16;
+    private static javax.swing.JButton jButton17;
+    private static javax.swing.JButton jButton18;
+    private static javax.swing.JButton jButton19;
+    private static javax.swing.JButton jButton2;
+    private static javax.swing.JButton jButton20;
+    private static javax.swing.JButton jButton21;
+    private static javax.swing.JButton jButton22;
+    private static javax.swing.JButton jButton23;
+    private static javax.swing.JButton jButton24;
+    private static javax.swing.JButton jButton25;
+    private static javax.swing.JButton jButton26;
+    private static javax.swing.JButton jButton27;
+    private static javax.swing.JButton jButton29;
+    private static javax.swing.JButton jButton3;
+    private static javax.swing.JButton jButton30;
+    private static javax.swing.JButton jButton31;
+    private static javax.swing.JButton jButton32;
+    private static javax.swing.JButton jButton33;
+    private static javax.swing.JButton jButton34;
+    private static javax.swing.JButton jButton35;
+    private static javax.swing.JButton jButton36;
+    private static javax.swing.JButton jButton38;
+    private static javax.swing.JButton jButton39;
+    private static javax.swing.JButton jButton4;
+    private static javax.swing.JButton jButton40;
+    private static javax.swing.JButton jButton41;
+    private static javax.swing.JButton jButton42;
+    private static javax.swing.JButton jButton43;
+    private static javax.swing.JButton jButton44;
+    private static javax.swing.JButton jButton45;
+    private static javax.swing.JButton jButton47;
+    private static javax.swing.JButton jButton48;
+    private static javax.swing.JButton jButton49;
+    private static javax.swing.JButton jButton5;
+    private static javax.swing.JButton jButton50;
+    private static javax.swing.JButton jButton51;
+    private static javax.swing.JButton jButton52;
+    private static javax.swing.JButton jButton53;
+    private static javax.swing.JButton jButton54;
+    private static javax.swing.JButton jButton56;
+    private static javax.swing.JButton jButton57;
+    private static javax.swing.JButton jButton58;
+    private static javax.swing.JButton jButton59;
+    private static javax.swing.JButton jButton6;
+    private static javax.swing.JButton jButton60;
+    private static javax.swing.JButton jButton61;
+    private static javax.swing.JButton jButton62;
+    private static javax.swing.JButton jButton63;
+    private static javax.swing.JButton jButton65;
+    private static javax.swing.JButton jButton66;
+    private static javax.swing.JButton jButton67;
+    private static javax.swing.JButton jButton68;
+    private static javax.swing.JButton jButton69;
+    private static javax.swing.JButton jButton7;
+    private static javax.swing.JButton jButton70;
+    private static javax.swing.JButton jButton71;
+    private static javax.swing.JButton jButton72;
+    private static javax.swing.JButton jButton74;
+    private static javax.swing.JButton jButton75;
+    private static javax.swing.JButton jButton76;
+    private static javax.swing.JButton jButton77;
+    private static javax.swing.JButton jButton78;
+    private static javax.swing.JButton jButton79;
+    private static javax.swing.JButton jButton8;
+    private static javax.swing.JButton jButton80;
+    private static javax.swing.JButton jButton81;
+    private static javax.swing.JButton jButton83;
+    private static javax.swing.JButton jButton84;
+    private static javax.swing.JButton jButton85;
+    private static javax.swing.JButton jButton86;
+    private static javax.swing.JButton jButton87;
+    private static javax.swing.JButton jButton88;
+    private static javax.swing.JButton jButton89;
+    private static javax.swing.JButton jButton9;
+    private static javax.swing.JButton jButton90;
+    private static javax.swing.JLabel jLabel1;
+    private static javax.swing.JLabel jLabel10;
+    private static javax.swing.JLabel jLabel11;
+    private static javax.swing.JLabel jLabel12;
+    private static javax.swing.JLabel jLabel13;
+    private static javax.swing.JLabel jLabel14;
+    private static javax.swing.JLabel jLabel15;
+    private static javax.swing.JLabel jLabel16;
+    private static javax.swing.JLabel jLabel17;
+    private static javax.swing.JLabel jLabel18;
+    private static javax.swing.JLabel jLabel19;
+    private static javax.swing.JLabel jLabel2;
+    private static javax.swing.JLabel jLabel20;
+    private static javax.swing.JLabel jLabel21;
+    private static javax.swing.JLabel jLabel22;
+    private static javax.swing.JLabel jLabel23;
+    private static javax.swing.JLabel jLabel24;
+    private static javax.swing.JLabel jLabel25;
+    private static javax.swing.JLabel jLabel26;
+    private static javax.swing.JLabel jLabel3;
+    private static javax.swing.JLabel jLabel4;
+    private static javax.swing.JLabel jLabel5;
+    private static javax.swing.JLabel jLabel6;
+    private static javax.swing.JLabel jLabel7;
+    private static javax.swing.JLabel jLabel8;
+    private static javax.swing.JLabel jLabel9;
+    private static javax.swing.JPanel jPanel1;
+    private static javax.swing.JPanel jPanel2;
+    private static javax.swing.JSeparator jSeparator1;
+    private static javax.swing.JSeparator jSeparator2;
+    private static javax.swing.JSeparator jSeparator3;
+    private static javax.swing.JSeparator jSeparator4;
+    private static javax.swing.JSeparator jSeparator5;
+    private static javax.swing.JSeparator jSeparator6;
+    private static javax.swing.JTextField jTextField1;
+    private static javax.swing.JTextField jTextField3;
+    private static javax.swing.JLabel label1;
     // End of variables declaration//GEN-END:variables
 }
