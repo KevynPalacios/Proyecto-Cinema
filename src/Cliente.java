@@ -21,12 +21,11 @@
 
 import java.awt.Color;
 import static java.awt.Image.SCALE_SMOOTH;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.*;
 import javax.swing.*;
 
 public class Cliente extends javax.swing.JFrame {
@@ -37,8 +36,7 @@ public class Cliente extends javax.swing.JFrame {
     static DataInputStream in;
     static DataOutputStream out;
     static Socket sc;
-
-    private JButton[][] botones = new JButton[8][8];
+    static Datos datos = new Datos();
 
     public Cliente() {
 
@@ -53,82 +51,61 @@ public class Cliente extends javax.swing.JFrame {
             this.pintarImagen(this.jButton3, "src/img/PortadaX.jpg");
             this.pintarImagen(this.jButton4, "src/img/PortadaBat.jpg");
             this.setLocationRelativeTo(null);
-            
-            botones[0][0] = boton1;
-            botones[0][1] = boton2;
-            botones[0][2] = boton3;
-            botones[0][3] = boton4;
-            botones[0][4] = boton5;
-            botones[0][5] = boton6;
-            botones[0][6] = boton7;
-            botones[0][7] = boton8;
-            botones[1][0] = boton9;
-            botones[1][1] = boton10;
-            botones[1][2] = boton11;
-            botones[1][3] = boton12;
-            botones[1][4] = boton13;
-            botones[1][5] = boton14;
-            botones[1][6] = boton15;
-            botones[1][7] = boton16;
-            botones[2][0] = boton17;
-            botones[2][1] = boton18;
-            botones[2][2] = boton19;
-            botones[2][3] = boton20;
-            botones[2][4] = boton21;
-            botones[2][5] = boton22;
-            botones[2][6] = boton23;
-            botones[2][7] = boton24;
-            botones[3][0] = boton25;
-            botones[3][1] = boton26;
-            botones[3][2] = boton27;
-            botones[3][3] = boton28;
-            botones[3][4] = boton29;
-            botones[3][5] = boton30;
-            botones[3][6] = boton31;
-            botones[3][7] = boton32;
-            botones[4][0] = boton33;
-            botones[4][1] = boton34;
-            botones[4][2] = boton35;
-            botones[4][3] = boton36;
-            botones[4][4] = boton37;
-            botones[4][5] = boton38;
-            botones[4][6] = boton39;
-            botones[4][7] = boton40;
-            botones[5][0] = boton41;
-            botones[5][1] = boton42;
-            botones[5][2] = boton43;
-            botones[5][3] = boton44;
-            botones[5][4] = boton45;
-            botones[5][5] = boton46;
-            botones[5][6] = boton47;
-            botones[5][7] = boton48;
-            botones[6][0] = boton49;
-            botones[6][1] = boton50;
-            botones[6][2] = boton51;
-            botones[6][3] = boton52;
-            botones[6][4] = boton53;
-            botones[6][5] = boton54;
-            botones[6][6] = boton55;
-            botones[6][7] = boton56;
-            botones[7][0] = boton57;
-            botones[7][1] = boton58;
-            botones[7][2] = boton59;
-            botones[7][3] = boton60;
-            botones[7][4] = boton61;
-            botones[7][5] = boton62;
-            botones[7][6] = boton63;
-            botones[7][7] = boton64;
-            
+
             sc = new Socket("localhost", PUERTO);
             out = new DataOutputStream(sc.getOutputStream());
 
+            /*botones[0][0] = jButton20;
+            botones[0][1] = jButton21;
+            botones[0][2] = jButton22;
+            botones[0][3] = jButton23;
+            botones[0][4] = jButton24;
+            botones[0][5] = jButton25;
+            botones[1][0] = jButton26;
+            botones[1][1] = jButton27;
+            botones[1][2] = jButton28;
+            botones[1][3] = jButton29;
+            botones[1][4] = jButton30;
+            botones[1][5] = jButton31;
+            botones[2][0] = jButton32;
+            botones[2][1] = jButton33;
+            botones[2][2] = jButton34;
+            botones[2][3] = jButton35;
+            botones[2][4] = jButton36;
+            botones[2][5] = jButton37;
+            botones[3][0] = jButton38;
+            botones[3][1] = jButton39;
+            botones[3][2] = jButton40;
+            botones[3][3] = jButton41;
+            botones[3][4] = jButton42;
+            botones[3][5] = jButton43;
+            botones[4][0] = jButton44;
+            botones[4][1] = jButton45;
+            botones[4][2] = jButton46;
+            botones[4][3] = jButton47;
+            botones[4][4] = jButton48;
+            botones[4][5] = jButton49;
+            botones[5][0] = jButton50;
+            botones[5][1] = jButton51;
+            botones[5][2] = jButton52;
+            botones[5][3] = jButton53;
+            botones[5][4] = jButton54;
+            botones[5][5] = jButton55;*/
         } catch (IOException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public JButton[][] getBotones() {
-        return botones;
+
+    private void pintarImagen(JButton btn, String ruta) {
+        this.imagen = new ImageIcon(ruta);
+        this.icono = new ImageIcon(this.imagen.getImage().getScaledInstance(btn.getWidth(), btn.getHeight(), SCALE_SMOOTH));
+        btn.setIcon(this.icono);
+        btn.setBorder(null);
+        btn.setOpaque(true);
+        btn.setBackground(Color.LIGHT_GRAY);
+        btn.setContentAreaFilled(false);
+        btn.setFocusPainted(false);
+        this.repaint();
     }
 
     @SuppressWarnings("unchecked")
@@ -178,84 +155,83 @@ public class Cliente extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        boton1 = new javax.swing.JButton();
-        boton2 = new javax.swing.JButton();
-        boton3 = new javax.swing.JButton();
-        boton4 = new javax.swing.JButton();
-        boton5 = new javax.swing.JButton();
-        boton6 = new javax.swing.JButton();
-        boton7 = new javax.swing.JButton();
-        boton8 = new javax.swing.JButton();
-        boton9 = new javax.swing.JButton();
-        boton10 = new javax.swing.JButton();
-        boton11 = new javax.swing.JButton();
-        boton12 = new javax.swing.JButton();
-        boton13 = new javax.swing.JButton();
-        boton14 = new javax.swing.JButton();
-        boton15 = new javax.swing.JButton();
-        boton16 = new javax.swing.JButton();
-        boton17 = new javax.swing.JButton();
-        boton18 = new javax.swing.JButton();
-        boton19 = new javax.swing.JButton();
-        boton20 = new javax.swing.JButton();
-        boton21 = new javax.swing.JButton();
-        boton22 = new javax.swing.JButton();
-        boton23 = new javax.swing.JButton();
-        boton24 = new javax.swing.JButton();
-        boton25 = new javax.swing.JButton();
-        boton26 = new javax.swing.JButton();
-        boton27 = new javax.swing.JButton();
-        boton28 = new javax.swing.JButton();
-        boton29 = new javax.swing.JButton();
-        boton30 = new javax.swing.JButton();
-        boton31 = new javax.swing.JButton();
-        boton32 = new javax.swing.JButton();
-        boton33 = new javax.swing.JButton();
-        boton34 = new javax.swing.JButton();
-        boton35 = new javax.swing.JButton();
-        boton36 = new javax.swing.JButton();
-        boton37 = new javax.swing.JButton();
-        boton38 = new javax.swing.JButton();
-        boton39 = new javax.swing.JButton();
-        boton40 = new javax.swing.JButton();
-        boton41 = new javax.swing.JButton();
-        boton42 = new javax.swing.JButton();
-        boton43 = new javax.swing.JButton();
-        boton44 = new javax.swing.JButton();
-        boton45 = new javax.swing.JButton();
-        boton46 = new javax.swing.JButton();
-        boton47 = new javax.swing.JButton();
-        boton48 = new javax.swing.JButton();
-        boton49 = new javax.swing.JButton();
-        boton50 = new javax.swing.JButton();
-        boton51 = new javax.swing.JButton();
-        boton52 = new javax.swing.JButton();
-        boton53 = new javax.swing.JButton();
-        boton54 = new javax.swing.JButton();
-        boton55 = new javax.swing.JButton();
-        boton56 = new javax.swing.JButton();
-        boton57 = new javax.swing.JButton();
-        boton58 = new javax.swing.JButton();
-        boton59 = new javax.swing.JButton();
-        boton60 = new javax.swing.JButton();
-        boton61 = new javax.swing.JButton();
-        boton62 = new javax.swing.JButton();
-        boton63 = new javax.swing.JButton();
-        boton64 = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         jLabel26 = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
         jButton19 = new javax.swing.JButton();
+        jLabel27 = new javax.swing.JLabel();
+        jButton20 = new javax.swing.JButton();
+        jButton21 = new javax.swing.JButton();
+        jButton22 = new javax.swing.JButton();
+        jButton23 = new javax.swing.JButton();
+        jButton24 = new javax.swing.JButton();
+        jButton25 = new javax.swing.JButton();
+        jButton26 = new javax.swing.JButton();
+        jButton27 = new javax.swing.JButton();
+        jButton28 = new javax.swing.JButton();
+        jButton29 = new javax.swing.JButton();
+        jButton30 = new javax.swing.JButton();
+        jButton31 = new javax.swing.JButton();
+        jButton32 = new javax.swing.JButton();
+        jButton33 = new javax.swing.JButton();
+        jButton34 = new javax.swing.JButton();
+        jButton35 = new javax.swing.JButton();
+        jButton36 = new javax.swing.JButton();
+        jButton37 = new javax.swing.JButton();
+        jButton38 = new javax.swing.JButton();
+        jButton39 = new javax.swing.JButton();
+        jButton40 = new javax.swing.JButton();
+        jButton41 = new javax.swing.JButton();
+        jButton42 = new javax.swing.JButton();
+        jButton43 = new javax.swing.JButton();
+        jButton44 = new javax.swing.JButton();
+        jButton45 = new javax.swing.JButton();
+        jButton46 = new javax.swing.JButton();
+        jButton47 = new javax.swing.JButton();
+        jButton48 = new javax.swing.JButton();
+        jButton49 = new javax.swing.JButton();
+        jButton50 = new javax.swing.JButton();
+        jButton51 = new javax.swing.JButton();
+        jButton52 = new javax.swing.JButton();
+        jButton53 = new javax.swing.JButton();
+        jButton54 = new javax.swing.JButton();
+        jButton55 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jSeparator7 = new javax.swing.JSeparator();
+        jSeparator8 = new javax.swing.JSeparator();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jSeparator9 = new javax.swing.JSeparator();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jSeparator10 = new javax.swing.JSeparator();
+        jLabel35 = new javax.swing.JLabel();
+        jSeparator11 = new javax.swing.JSeparator();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        jLabel43 = new javax.swing.JLabel();
+        jLabel44 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
+        jLabel46 = new javax.swing.JLabel();
+        jLabel47 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -583,7 +559,7 @@ public class Cliente extends javax.swing.JFrame {
         jButton6.setBackground(new java.awt.Color(204, 0, 0));
         jButton6.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Cancelar");
+        jButton6.setText("Reiniciar");
         jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -642,475 +618,6 @@ public class Cliente extends javax.swing.JFrame {
         jPanel2.add(jLabel15);
         jLabel15.setBounds(40, 490, 20, 14);
 
-        jLabel16.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel16.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setText("G");
-        jPanel2.add(jLabel16);
-        jLabel16.setBounds(40, 520, 20, 14);
-
-        jLabel17.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel17.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("H");
-        jPanel2.add(jLabel17);
-        jLabel17.setBounds(40, 550, 20, 14);
-
-        boton1.setBackground(new java.awt.Color(0, 153, 204));
-        boton1.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton1.setForeground(new java.awt.Color(255, 255, 255));
-        boton1.setText("1");
-        jPanel2.add(boton1);
-        boton1.setBounds(100, 330, 40, 30);
-
-        boton2.setBackground(new java.awt.Color(0, 153, 204));
-        boton2.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton2.setForeground(new java.awt.Color(255, 255, 255));
-        boton2.setText("2");
-        jPanel2.add(boton2);
-        boton2.setBounds(140, 330, 40, 30);
-
-        boton3.setBackground(new java.awt.Color(0, 153, 204));
-        boton3.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton3.setForeground(new java.awt.Color(255, 255, 255));
-        boton3.setText("3");
-        jPanel2.add(boton3);
-        boton3.setBounds(180, 330, 40, 30);
-
-        boton4.setBackground(new java.awt.Color(0, 153, 204));
-        boton4.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton4.setForeground(new java.awt.Color(255, 255, 255));
-        boton4.setText("4");
-        jPanel2.add(boton4);
-        boton4.setBounds(220, 330, 40, 30);
-
-        boton5.setBackground(new java.awt.Color(0, 153, 204));
-        boton5.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton5.setForeground(new java.awt.Color(255, 255, 255));
-        boton5.setText("5");
-        jPanel2.add(boton5);
-        boton5.setBounds(260, 330, 40, 30);
-
-        boton6.setBackground(new java.awt.Color(0, 153, 204));
-        boton6.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton6.setForeground(new java.awt.Color(255, 255, 255));
-        boton6.setText("6");
-        jPanel2.add(boton6);
-        boton6.setBounds(300, 330, 40, 30);
-
-        boton7.setBackground(new java.awt.Color(0, 153, 204));
-        boton7.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton7.setForeground(new java.awt.Color(255, 255, 255));
-        boton7.setText("7");
-        jPanel2.add(boton7);
-        boton7.setBounds(340, 330, 40, 30);
-
-        boton8.setBackground(new java.awt.Color(0, 153, 204));
-        boton8.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton8.setForeground(new java.awt.Color(255, 255, 255));
-        boton8.setText("8");
-        boton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boton8ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(boton8);
-        boton8.setBounds(380, 330, 40, 30);
-
-        boton9.setBackground(new java.awt.Color(0, 153, 204));
-        boton9.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton9.setForeground(new java.awt.Color(255, 255, 255));
-        boton9.setText("1");
-        jPanel2.add(boton9);
-        boton9.setBounds(100, 360, 40, 30);
-
-        boton10.setBackground(new java.awt.Color(0, 153, 204));
-        boton10.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton10.setForeground(new java.awt.Color(255, 255, 255));
-        boton10.setText("2");
-        jPanel2.add(boton10);
-        boton10.setBounds(140, 360, 40, 30);
-
-        boton11.setBackground(new java.awt.Color(0, 153, 204));
-        boton11.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton11.setForeground(new java.awt.Color(255, 255, 255));
-        boton11.setText("3");
-        jPanel2.add(boton11);
-        boton11.setBounds(180, 360, 40, 30);
-
-        boton12.setBackground(new java.awt.Color(0, 153, 204));
-        boton12.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton12.setForeground(new java.awt.Color(255, 255, 255));
-        boton12.setText("4");
-        jPanel2.add(boton12);
-        boton12.setBounds(220, 360, 40, 30);
-
-        boton13.setBackground(new java.awt.Color(0, 153, 204));
-        boton13.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton13.setForeground(new java.awt.Color(255, 255, 255));
-        boton13.setText("5");
-        jPanel2.add(boton13);
-        boton13.setBounds(260, 360, 40, 30);
-
-        boton14.setBackground(new java.awt.Color(0, 153, 204));
-        boton14.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton14.setForeground(new java.awt.Color(255, 255, 255));
-        boton14.setText("6");
-        jPanel2.add(boton14);
-        boton14.setBounds(300, 360, 40, 30);
-
-        boton15.setBackground(new java.awt.Color(0, 153, 204));
-        boton15.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton15.setForeground(new java.awt.Color(255, 255, 255));
-        boton15.setText("7");
-        jPanel2.add(boton15);
-        boton15.setBounds(340, 360, 40, 30);
-
-        boton16.setBackground(new java.awt.Color(0, 153, 204));
-        boton16.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton16.setForeground(new java.awt.Color(255, 255, 255));
-        boton16.setText("8");
-        jPanel2.add(boton16);
-        boton16.setBounds(380, 360, 40, 30);
-
-        boton17.setBackground(new java.awt.Color(0, 153, 204));
-        boton17.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton17.setForeground(new java.awt.Color(255, 255, 255));
-        boton17.setText("1");
-        jPanel2.add(boton17);
-        boton17.setBounds(100, 390, 40, 30);
-
-        boton18.setBackground(new java.awt.Color(0, 153, 204));
-        boton18.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton18.setForeground(new java.awt.Color(255, 255, 255));
-        boton18.setText("2");
-        jPanel2.add(boton18);
-        boton18.setBounds(140, 390, 40, 30);
-
-        boton19.setBackground(new java.awt.Color(0, 153, 204));
-        boton19.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton19.setForeground(new java.awt.Color(255, 255, 255));
-        boton19.setText("3");
-        jPanel2.add(boton19);
-        boton19.setBounds(180, 390, 40, 30);
-
-        boton20.setBackground(new java.awt.Color(0, 153, 204));
-        boton20.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton20.setForeground(new java.awt.Color(255, 255, 255));
-        boton20.setText("4");
-        jPanel2.add(boton20);
-        boton20.setBounds(220, 390, 40, 30);
-
-        boton21.setBackground(new java.awt.Color(0, 153, 204));
-        boton21.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton21.setForeground(new java.awt.Color(255, 255, 255));
-        boton21.setText("5");
-        jPanel2.add(boton21);
-        boton21.setBounds(260, 390, 40, 30);
-
-        boton22.setBackground(new java.awt.Color(0, 153, 204));
-        boton22.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton22.setForeground(new java.awt.Color(255, 255, 255));
-        boton22.setText("6");
-        jPanel2.add(boton22);
-        boton22.setBounds(300, 390, 40, 30);
-
-        boton23.setBackground(new java.awt.Color(0, 153, 204));
-        boton23.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton23.setForeground(new java.awt.Color(255, 255, 255));
-        boton23.setText("7");
-        jPanel2.add(boton23);
-        boton23.setBounds(340, 390, 40, 30);
-
-        boton24.setBackground(new java.awt.Color(0, 153, 204));
-        boton24.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton24.setForeground(new java.awt.Color(255, 255, 255));
-        boton24.setText("8");
-        jPanel2.add(boton24);
-        boton24.setBounds(380, 390, 40, 30);
-
-        boton25.setBackground(new java.awt.Color(0, 153, 204));
-        boton25.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton25.setForeground(new java.awt.Color(255, 255, 255));
-        boton25.setText("1");
-        jPanel2.add(boton25);
-        boton25.setBounds(100, 420, 40, 30);
-
-        boton26.setBackground(new java.awt.Color(0, 153, 204));
-        boton26.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton26.setForeground(new java.awt.Color(255, 255, 255));
-        boton26.setText("2");
-        jPanel2.add(boton26);
-        boton26.setBounds(140, 420, 40, 30);
-
-        boton27.setBackground(new java.awt.Color(0, 153, 204));
-        boton27.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton27.setForeground(new java.awt.Color(255, 255, 255));
-        boton27.setText("3");
-        jPanel2.add(boton27);
-        boton27.setBounds(180, 420, 40, 30);
-
-        boton28.setBackground(new java.awt.Color(0, 153, 204));
-        boton28.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton28.setForeground(new java.awt.Color(255, 255, 255));
-        boton28.setText("4");
-        jPanel2.add(boton28);
-        boton28.setBounds(220, 420, 40, 30);
-
-        boton29.setBackground(new java.awt.Color(0, 153, 204));
-        boton29.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton29.setForeground(new java.awt.Color(255, 255, 255));
-        boton29.setText("5");
-        jPanel2.add(boton29);
-        boton29.setBounds(260, 420, 40, 30);
-
-        boton30.setBackground(new java.awt.Color(0, 153, 204));
-        boton30.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton30.setForeground(new java.awt.Color(255, 255, 255));
-        boton30.setText("6");
-        jPanel2.add(boton30);
-        boton30.setBounds(300, 420, 40, 30);
-
-        boton31.setBackground(new java.awt.Color(0, 153, 204));
-        boton31.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton31.setForeground(new java.awt.Color(255, 255, 255));
-        boton31.setText("7");
-        jPanel2.add(boton31);
-        boton31.setBounds(340, 420, 40, 30);
-
-        boton32.setBackground(new java.awt.Color(0, 153, 204));
-        boton32.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton32.setForeground(new java.awt.Color(255, 255, 255));
-        boton32.setText("8");
-        jPanel2.add(boton32);
-        boton32.setBounds(380, 420, 40, 30);
-
-        boton33.setBackground(new java.awt.Color(0, 153, 204));
-        boton33.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton33.setForeground(new java.awt.Color(255, 255, 255));
-        boton33.setText("1");
-        jPanel2.add(boton33);
-        boton33.setBounds(100, 450, 40, 30);
-
-        boton34.setBackground(new java.awt.Color(0, 153, 204));
-        boton34.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton34.setForeground(new java.awt.Color(255, 255, 255));
-        boton34.setText("2");
-        jPanel2.add(boton34);
-        boton34.setBounds(140, 450, 40, 30);
-
-        boton35.setBackground(new java.awt.Color(0, 153, 204));
-        boton35.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton35.setForeground(new java.awt.Color(255, 255, 255));
-        boton35.setText("3");
-        jPanel2.add(boton35);
-        boton35.setBounds(180, 450, 40, 30);
-
-        boton36.setBackground(new java.awt.Color(0, 153, 204));
-        boton36.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton36.setForeground(new java.awt.Color(255, 255, 255));
-        boton36.setText("4");
-        jPanel2.add(boton36);
-        boton36.setBounds(220, 450, 40, 30);
-
-        boton37.setBackground(new java.awt.Color(0, 153, 204));
-        boton37.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton37.setForeground(new java.awt.Color(255, 255, 255));
-        boton37.setText("5");
-        jPanel2.add(boton37);
-        boton37.setBounds(260, 450, 40, 30);
-
-        boton38.setBackground(new java.awt.Color(0, 153, 204));
-        boton38.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton38.setForeground(new java.awt.Color(255, 255, 255));
-        boton38.setText("6");
-        jPanel2.add(boton38);
-        boton38.setBounds(300, 450, 40, 30);
-
-        boton39.setBackground(new java.awt.Color(0, 153, 204));
-        boton39.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton39.setForeground(new java.awt.Color(255, 255, 255));
-        boton39.setText("7");
-        jPanel2.add(boton39);
-        boton39.setBounds(340, 450, 40, 30);
-
-        boton40.setBackground(new java.awt.Color(0, 153, 204));
-        boton40.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton40.setForeground(new java.awt.Color(255, 255, 255));
-        boton40.setText("8");
-        jPanel2.add(boton40);
-        boton40.setBounds(380, 450, 40, 30);
-
-        boton41.setBackground(new java.awt.Color(0, 153, 204));
-        boton41.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton41.setForeground(new java.awt.Color(255, 255, 255));
-        boton41.setText("1");
-        jPanel2.add(boton41);
-        boton41.setBounds(100, 480, 40, 30);
-
-        boton42.setBackground(new java.awt.Color(0, 153, 204));
-        boton42.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton42.setForeground(new java.awt.Color(255, 255, 255));
-        boton42.setText("2");
-        jPanel2.add(boton42);
-        boton42.setBounds(140, 480, 40, 30);
-
-        boton43.setBackground(new java.awt.Color(0, 153, 204));
-        boton43.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton43.setForeground(new java.awt.Color(255, 255, 255));
-        boton43.setText("3");
-        jPanel2.add(boton43);
-        boton43.setBounds(180, 480, 40, 30);
-
-        boton44.setBackground(new java.awt.Color(0, 153, 204));
-        boton44.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton44.setForeground(new java.awt.Color(255, 255, 255));
-        boton44.setText("4");
-        jPanel2.add(boton44);
-        boton44.setBounds(220, 480, 40, 30);
-
-        boton45.setBackground(new java.awt.Color(0, 153, 204));
-        boton45.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton45.setForeground(new java.awt.Color(255, 255, 255));
-        boton45.setText("5");
-        jPanel2.add(boton45);
-        boton45.setBounds(260, 480, 40, 30);
-
-        boton46.setBackground(new java.awt.Color(0, 153, 204));
-        boton46.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton46.setForeground(new java.awt.Color(255, 255, 255));
-        boton46.setText("6");
-        jPanel2.add(boton46);
-        boton46.setBounds(300, 480, 40, 30);
-
-        boton47.setBackground(new java.awt.Color(0, 153, 204));
-        boton47.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton47.setForeground(new java.awt.Color(255, 255, 255));
-        boton47.setText("7");
-        jPanel2.add(boton47);
-        boton47.setBounds(340, 480, 40, 30);
-
-        boton48.setBackground(new java.awt.Color(0, 153, 204));
-        boton48.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton48.setForeground(new java.awt.Color(255, 255, 255));
-        boton48.setText("8");
-        jPanel2.add(boton48);
-        boton48.setBounds(380, 480, 40, 30);
-
-        boton49.setBackground(new java.awt.Color(0, 153, 204));
-        boton49.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton49.setForeground(new java.awt.Color(255, 255, 255));
-        boton49.setText("1");
-        jPanel2.add(boton49);
-        boton49.setBounds(100, 510, 40, 30);
-
-        boton50.setBackground(new java.awt.Color(0, 153, 204));
-        boton50.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton50.setForeground(new java.awt.Color(255, 255, 255));
-        boton50.setText("2");
-        jPanel2.add(boton50);
-        boton50.setBounds(140, 510, 40, 30);
-
-        boton51.setBackground(new java.awt.Color(0, 153, 204));
-        boton51.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton51.setForeground(new java.awt.Color(255, 255, 255));
-        boton51.setText("3");
-        jPanel2.add(boton51);
-        boton51.setBounds(180, 510, 40, 30);
-
-        boton52.setBackground(new java.awt.Color(0, 153, 204));
-        boton52.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton52.setForeground(new java.awt.Color(255, 255, 255));
-        boton52.setText("4");
-        jPanel2.add(boton52);
-        boton52.setBounds(220, 510, 40, 30);
-
-        boton53.setBackground(new java.awt.Color(0, 153, 204));
-        boton53.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton53.setForeground(new java.awt.Color(255, 255, 255));
-        boton53.setText("5");
-        jPanel2.add(boton53);
-        boton53.setBounds(260, 510, 40, 30);
-
-        boton54.setBackground(new java.awt.Color(0, 153, 204));
-        boton54.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton54.setForeground(new java.awt.Color(255, 255, 255));
-        boton54.setText("6");
-        jPanel2.add(boton54);
-        boton54.setBounds(300, 510, 40, 30);
-
-        boton55.setBackground(new java.awt.Color(0, 153, 204));
-        boton55.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton55.setForeground(new java.awt.Color(255, 255, 255));
-        boton55.setText("7");
-        jPanel2.add(boton55);
-        boton55.setBounds(340, 510, 40, 30);
-
-        boton56.setBackground(new java.awt.Color(0, 153, 204));
-        boton56.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton56.setForeground(new java.awt.Color(255, 255, 255));
-        boton56.setText("8");
-        jPanel2.add(boton56);
-        boton56.setBounds(380, 510, 40, 30);
-
-        boton57.setBackground(new java.awt.Color(0, 153, 204));
-        boton57.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton57.setForeground(new java.awt.Color(255, 255, 255));
-        boton57.setText("1");
-        jPanel2.add(boton57);
-        boton57.setBounds(100, 540, 40, 30);
-
-        boton58.setBackground(new java.awt.Color(0, 153, 204));
-        boton58.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton58.setForeground(new java.awt.Color(255, 255, 255));
-        boton58.setText("2");
-        jPanel2.add(boton58);
-        boton58.setBounds(140, 540, 40, 30);
-
-        boton59.setBackground(new java.awt.Color(0, 153, 204));
-        boton59.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton59.setForeground(new java.awt.Color(255, 255, 255));
-        boton59.setText("3");
-        jPanel2.add(boton59);
-        boton59.setBounds(180, 540, 40, 30);
-
-        boton60.setBackground(new java.awt.Color(0, 153, 204));
-        boton60.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton60.setForeground(new java.awt.Color(255, 255, 255));
-        boton60.setText("4");
-        jPanel2.add(boton60);
-        boton60.setBounds(220, 540, 40, 30);
-
-        boton61.setBackground(new java.awt.Color(0, 153, 204));
-        boton61.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton61.setForeground(new java.awt.Color(255, 255, 255));
-        boton61.setText("5");
-        jPanel2.add(boton61);
-        boton61.setBounds(260, 540, 40, 30);
-
-        boton62.setBackground(new java.awt.Color(0, 153, 204));
-        boton62.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton62.setForeground(new java.awt.Color(255, 255, 255));
-        boton62.setText("6");
-        jPanel2.add(boton62);
-        boton62.setBounds(300, 540, 40, 30);
-
-        boton63.setBackground(new java.awt.Color(0, 153, 204));
-        boton63.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton63.setForeground(new java.awt.Color(255, 255, 255));
-        boton63.setText("7");
-        jPanel2.add(boton63);
-        boton63.setBounds(340, 540, 40, 30);
-
-        boton64.setBackground(new java.awt.Color(0, 153, 204));
-        boton64.setFont(new java.awt.Font("Arial", 1, 8)); // NOI18N
-        boton64.setForeground(new java.awt.Color(255, 255, 255));
-        boton64.setText("8");
-        jPanel2.add(boton64);
-        boton64.setBounds(380, 540, 40, 30);
-
         jLabel18.setBackground(new java.awt.Color(255, 255, 255));
         jLabel18.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(0, 0, 0));
@@ -1159,22 +666,6 @@ public class Cliente extends javax.swing.JFrame {
         jPanel2.add(jLabel23);
         jLabel23.setBounds(450, 490, 20, 14);
 
-        jLabel24.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel24.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel24.setText("G");
-        jPanel2.add(jLabel24);
-        jLabel24.setBounds(450, 520, 20, 14);
-
-        jLabel25.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel25.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel25.setText("H");
-        jPanel2.add(jLabel25);
-        jLabel25.setBounds(450, 550, 20, 14);
-
         jSeparator5.setForeground(new java.awt.Color(153, 153, 153));
         jSeparator5.setToolTipText("");
         jSeparator5.setName(""); // NOI18N
@@ -1198,14 +689,562 @@ public class Cliente extends javax.swing.JFrame {
         jButton19.setBackground(new java.awt.Color(0, 153, 0));
         jButton19.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jButton19.setForeground(new java.awt.Color(255, 255, 255));
-        jButton19.setText("Continuar");
+        jButton19.setText("Finalizar");
         jButton19.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton19.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton19ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButton19);
         jButton19.setBounds(280, 600, 130, 40);
 
+        jLabel27.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel27.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel2.add(jLabel27);
+        jLabel27.setBounds(0, 270, 510, 40);
+
+        jButton20.setBackground(java.awt.Color.gray);
+        jButton20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton20ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton20);
+        jButton20.setBounds(170, 330, 30, 30);
+
+        jButton21.setBackground(java.awt.Color.gray);
+        jButton21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton21ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton21);
+        jButton21.setBounds(200, 330, 30, 30);
+
+        jButton22.setBackground(java.awt.Color.gray);
+        jButton22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton22ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton22);
+        jButton22.setBounds(230, 330, 30, 30);
+
+        jButton23.setBackground(java.awt.Color.gray);
+        jButton23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton23ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton23);
+        jButton23.setBounds(260, 330, 30, 30);
+
+        jButton24.setBackground(java.awt.Color.gray);
+        jButton24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton24ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton24);
+        jButton24.setBounds(290, 330, 30, 30);
+
+        jButton25.setBackground(java.awt.Color.gray);
+        jButton25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton25ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton25);
+        jButton25.setBounds(320, 330, 30, 30);
+
+        jButton26.setBackground(java.awt.Color.gray);
+        jButton26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton26ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton26);
+        jButton26.setBounds(170, 360, 30, 30);
+
+        jButton27.setBackground(java.awt.Color.gray);
+        jButton27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton27ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton27);
+        jButton27.setBounds(200, 360, 30, 30);
+
+        jButton28.setBackground(java.awt.Color.gray);
+        jButton28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton28ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton28);
+        jButton28.setBounds(230, 360, 30, 30);
+
+        jButton29.setBackground(java.awt.Color.gray);
+        jButton29.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton29ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton29);
+        jButton29.setBounds(260, 360, 30, 30);
+
+        jButton30.setBackground(java.awt.Color.gray);
+        jButton30.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton30ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton30);
+        jButton30.setBounds(290, 360, 30, 30);
+
+        jButton31.setBackground(java.awt.Color.gray);
+        jButton31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton31ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton31);
+        jButton31.setBounds(320, 360, 30, 30);
+
+        jButton32.setBackground(java.awt.Color.gray);
+        jButton32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton32ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton32);
+        jButton32.setBounds(170, 390, 30, 30);
+
+        jButton33.setBackground(java.awt.Color.gray);
+        jButton33.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton33ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton33);
+        jButton33.setBounds(200, 390, 30, 30);
+
+        jButton34.setBackground(java.awt.Color.gray);
+        jButton34.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton34ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton34);
+        jButton34.setBounds(230, 390, 30, 30);
+
+        jButton35.setBackground(java.awt.Color.gray);
+        jButton35.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton35ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton35);
+        jButton35.setBounds(260, 390, 30, 30);
+
+        jButton36.setBackground(java.awt.Color.gray);
+        jButton36.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton36ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton36);
+        jButton36.setBounds(290, 390, 30, 30);
+
+        jButton37.setBackground(java.awt.Color.gray);
+        jButton37.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton37ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton37);
+        jButton37.setBounds(320, 390, 30, 30);
+
+        jButton38.setBackground(java.awt.Color.gray);
+        jButton38.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton38ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton38);
+        jButton38.setBounds(170, 420, 30, 30);
+
+        jButton39.setBackground(java.awt.Color.gray);
+        jButton39.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton39ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton39);
+        jButton39.setBounds(200, 420, 30, 30);
+
+        jButton40.setBackground(java.awt.Color.gray);
+        jButton40.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton40ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton40);
+        jButton40.setBounds(230, 420, 30, 30);
+
+        jButton41.setBackground(java.awt.Color.gray);
+        jButton41.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton41ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton41);
+        jButton41.setBounds(260, 420, 30, 30);
+
+        jButton42.setBackground(java.awt.Color.gray);
+        jButton42.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton42ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton42);
+        jButton42.setBounds(290, 420, 30, 30);
+
+        jButton43.setBackground(java.awt.Color.gray);
+        jButton43.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton43ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton43);
+        jButton43.setBounds(320, 420, 30, 30);
+
+        jButton44.setBackground(java.awt.Color.gray);
+        jButton44.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton44ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton44);
+        jButton44.setBounds(170, 450, 30, 30);
+
+        jButton45.setBackground(java.awt.Color.gray);
+        jButton45.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton45ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton45);
+        jButton45.setBounds(200, 450, 30, 30);
+
+        jButton46.setBackground(java.awt.Color.gray);
+        jButton46.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton46ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton46);
+        jButton46.setBounds(230, 450, 30, 30);
+
+        jButton47.setBackground(java.awt.Color.gray);
+        jButton47.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton47ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton47);
+        jButton47.setBounds(260, 450, 30, 30);
+
+        jButton48.setBackground(java.awt.Color.gray);
+        jButton48.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton48ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton48);
+        jButton48.setBounds(290, 450, 30, 30);
+
+        jButton49.setBackground(java.awt.Color.gray);
+        jButton49.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton49ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton49);
+        jButton49.setBounds(320, 450, 30, 30);
+
+        jButton50.setBackground(java.awt.Color.gray);
+        jButton50.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton50ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton50);
+        jButton50.setBounds(170, 480, 30, 30);
+
+        jButton51.setBackground(java.awt.Color.gray);
+        jButton51.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton51ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton51);
+        jButton51.setBounds(200, 480, 30, 30);
+
+        jButton52.setBackground(java.awt.Color.gray);
+        jButton52.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton52ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton52);
+        jButton52.setBounds(230, 480, 30, 30);
+
+        jButton53.setBackground(java.awt.Color.gray);
+        jButton53.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton53ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton53);
+        jButton53.setBounds(260, 480, 30, 30);
+
+        jButton54.setBackground(java.awt.Color.gray);
+        jButton54.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton54ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton54);
+        jButton54.setBounds(290, 480, 30, 30);
+
+        jButton55.setBackground(java.awt.Color.gray);
+        jButton55.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton55ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton55);
+        jButton55.setBounds(320, 480, 30, 30);
+
         formulario.add(jPanel2);
         jPanel2.setBounds(60, 30, 510, 677);
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 204), new java.awt.Color(153, 153, 153)));
+        jPanel3.setMaximumSize(new java.awt.Dimension(515, 677));
+        jPanel3.setLayout(null);
+
+        jLabel16.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel16.setFont(new java.awt.Font("Georgia", 1, 48)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel16.setText("Cinema");
+        jPanel3.add(jLabel16);
+        jLabel16.setBounds(0, 140, 510, 50);
+
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/crop logo 110.jpg"))); // NOI18N
+        jPanel3.add(jLabel17);
+        jLabel17.setBounds(-2, 48, 510, 95);
+
+        jLabel24.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel24.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel24.setText("Recibo de compra");
+        jPanel3.add(jLabel24);
+        jLabel24.setBounds(0, 190, 510, 40);
+
+        jSeparator7.setForeground(new java.awt.Color(153, 153, 153));
+        jSeparator7.setToolTipText("");
+        jSeparator7.setName(""); // NOI18N
+        jPanel3.add(jSeparator7);
+        jSeparator7.setBounds(270, 240, 140, 20);
+
+        jSeparator8.setForeground(new java.awt.Color(153, 153, 153));
+        jSeparator8.setToolTipText("");
+        jSeparator8.setName(""); // NOI18N
+        jPanel3.add(jSeparator8);
+        jSeparator8.setBounds(100, 240, 140, 20);
+
+        jLabel25.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel25.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel25.setText("o");
+        jPanel3.add(jLabel25);
+        jLabel25.setBounds(250, 230, 10, 16);
+
+        jLabel28.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel28.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jPanel3.add(jLabel28);
+        jLabel28.setBounds(260, 550, 150, 0);
+
+        jLabel29.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel29.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel29.setText("Tel:");
+        jPanel3.add(jLabel29);
+        jLabel29.setBounds(100, 280, 160, 22);
+
+        jLabel30.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel30.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel30.setText("Total:");
+        jPanel3.add(jLabel30);
+        jLabel30.setBounds(100, 520, 160, 22);
+
+        jSeparator9.setBackground(new java.awt.Color(255, 255, 255));
+        jSeparator9.setForeground(new java.awt.Color(102, 102, 102));
+        jPanel3.add(jSeparator9);
+        jSeparator9.setBounds(100, 510, 310, 10);
+
+        jLabel31.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel31.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel31.setText("Película:");
+        jPanel3.add(jLabel31);
+        jLabel31.setBounds(100, 370, 160, 22);
+
+        jLabel32.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel32.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel32.setText("Nombre:");
+        jPanel3.add(jLabel32);
+        jLabel32.setBounds(100, 410, 160, 22);
+
+        jLabel33.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel33.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel33.setText("Asientos:");
+        jPanel3.add(jLabel33);
+        jLabel33.setBounds(100, 440, 160, 22);
+
+        jSeparator10.setBackground(new java.awt.Color(255, 255, 255));
+        jSeparator10.setForeground(new java.awt.Color(102, 102, 102));
+        jPanel3.add(jSeparator10);
+        jSeparator10.setBounds(100, 400, 310, 10);
+
+        jLabel35.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel35.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel35.setText("Precio c/u:");
+        jPanel3.add(jLabel35);
+        jLabel35.setBounds(100, 480, 160, 22);
+
+        jSeparator11.setBackground(new java.awt.Color(255, 255, 255));
+        jSeparator11.setForeground(new java.awt.Color(102, 102, 102));
+        jPanel3.add(jSeparator11);
+        jSeparator11.setBounds(100, 470, 310, 10);
+
+        jLabel37.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel37.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel37.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel37.setText("Fecha:");
+        jPanel3.add(jLabel37);
+        jLabel37.setBounds(100, 310, 160, 22);
+
+        jLabel38.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel38.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel38.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel38.setText("Sala:");
+        jPanel3.add(jLabel38);
+        jLabel38.setBounds(100, 340, 160, 22);
+
+        jLabel34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/qr.jpg"))); // NOI18N
+        jPanel3.add(jLabel34);
+        jLabel34.setBounds(200, 550, 110, 110);
+
+        jLabel39.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel39.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel39.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel39.setText("Dirección:");
+        jPanel3.add(jLabel39);
+        jLabel39.setBounds(100, 250, 160, 22);
+
+        jLabel40.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel40.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel40.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel40.setText("C. Novena s/n,");
+        jPanel3.add(jLabel40);
+        jLabel40.setBounds(260, 250, 150, 22);
+
+        jLabel41.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel41.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel41.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel41.setText("686 134 5508");
+        jPanel3.add(jLabel41);
+        jLabel41.setBounds(260, 280, 150, 22);
+
+        jLabel42.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel42.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel42.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jPanel3.add(jLabel42);
+        jLabel42.setBounds(260, 310, 150, 20);
+
+        jLabel43.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel43.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel43.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel43.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jPanel3.add(jLabel43);
+        jLabel43.setBounds(260, 340, 150, 20);
+
+        jLabel44.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel44.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel44.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel44.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jPanel3.add(jLabel44);
+        jLabel44.setBounds(260, 370, 150, 20);
+
+        jLabel45.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel45.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel45.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel45.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jPanel3.add(jLabel45);
+        jLabel45.setBounds(260, 410, 150, 20);
+
+        jLabel46.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel46.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel46.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel46.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jPanel3.add(jLabel46);
+        jLabel46.setBounds(260, 440, 150, 20);
+
+        jLabel47.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel47.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel47.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel47.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jPanel3.add(jLabel47);
+        jLabel47.setBounds(260, 480, 150, 20);
+
+        jLabel48.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel48.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel48.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel48.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jPanel3.add(jLabel48);
+        jLabel48.setBounds(260, 520, 150, 20);
+
+        formulario.add(jPanel3);
+        jPanel3.setBounds(60, 30, 510, 677);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/FondoForm.jpg"))); // NOI18N
         formulario.add(jLabel1);
@@ -1250,9 +1289,10 @@ public class Cliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4MouseExited
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
         try {
+            datos.setSala(1);
             out.write(1);
+            datos.setPelicula("Doctor Strange");
             out.writeUTF("Doctor Strange");
 
             catalogo.setVisible(false);
@@ -1327,9 +1367,12 @@ public class Cliente extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         try {
+            datos.setNombre(jTextField1.getText());
             out.writeUTF(jTextField1.getText());
+            datos.setAsientos(Integer.parseInt(jTextField3.getText()));
+            datos.setC(Integer.parseInt(jTextField3.getText()));
             out.write(Integer.parseInt(jTextField3.getText()));
-
+            jLabel27.setText("Asientos restantes: " + datos.c);
             jPanel1.setVisible(false);
             jPanel2.setVisible(true);
         } catch (IOException ex) {
@@ -1337,13 +1380,192 @@ public class Cliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
+        seleccionarAsiento(jButton20);
+    }//GEN-LAST:event_jButton20ActionPerformed
+
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
 
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void boton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton8ActionPerformed
+    private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
+        seleccionarAsiento(jButton21);
+    }//GEN-LAST:event_jButton21ActionPerformed
 
-    }//GEN-LAST:event_boton8ActionPerformed
+    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
+        seleccionarAsiento(jButton22);// TODO add your handling code here:
+    }//GEN-LAST:event_jButton22ActionPerformed
+
+    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
+        seleccionarAsiento(jButton23);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton23ActionPerformed
+
+    private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
+        seleccionarAsiento(jButton24);    }//GEN-LAST:event_jButton24ActionPerformed
+
+    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
+        seleccionarAsiento(jButton25);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton25ActionPerformed
+
+    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
+        seleccionarAsiento(jButton26);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton26ActionPerformed
+
+    private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
+        seleccionarAsiento(jButton27);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton27ActionPerformed
+
+    private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
+        seleccionarAsiento(jButton28);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton28ActionPerformed
+
+    private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
+        seleccionarAsiento(jButton29);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton29ActionPerformed
+
+    private void jButton30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton30ActionPerformed
+        seleccionarAsiento(jButton30);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton30ActionPerformed
+
+    private void jButton31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton31ActionPerformed
+        seleccionarAsiento(jButton31);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton31ActionPerformed
+
+    private void jButton32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton32ActionPerformed
+        seleccionarAsiento(jButton32);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton32ActionPerformed
+
+    private void jButton33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton33ActionPerformed
+        seleccionarAsiento(jButton33);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton33ActionPerformed
+
+    private void jButton34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton34ActionPerformed
+        seleccionarAsiento(jButton34);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton34ActionPerformed
+
+    private void jButton35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton35ActionPerformed
+        seleccionarAsiento(jButton35);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton35ActionPerformed
+
+    private void jButton36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton36ActionPerformed
+        seleccionarAsiento(jButton36);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton36ActionPerformed
+
+    private void jButton37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton37ActionPerformed
+        seleccionarAsiento(jButton37);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton37ActionPerformed
+
+    private void jButton38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton38ActionPerformed
+        seleccionarAsiento(jButton38);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton38ActionPerformed
+
+    private void jButton39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton39ActionPerformed
+        seleccionarAsiento(jButton39);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton39ActionPerformed
+
+    private void jButton40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton40ActionPerformed
+        seleccionarAsiento(jButton40);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton40ActionPerformed
+
+    private void jButton41ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton41ActionPerformed
+        seleccionarAsiento(jButton41);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton41ActionPerformed
+
+    private void jButton42ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton42ActionPerformed
+        seleccionarAsiento(jButton42);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton42ActionPerformed
+
+    private void jButton43ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton43ActionPerformed
+        seleccionarAsiento(jButton43);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton43ActionPerformed
+
+    private void jButton44ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton44ActionPerformed
+        seleccionarAsiento(jButton44);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton44ActionPerformed
+
+    private void jButton45ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton45ActionPerformed
+        seleccionarAsiento(jButton45);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton45ActionPerformed
+
+    private void jButton46ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton46ActionPerformed
+        seleccionarAsiento(jButton46);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton46ActionPerformed
+
+    private void jButton47ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton47ActionPerformed
+        seleccionarAsiento(jButton47);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton47ActionPerformed
+
+    private void jButton48ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton48ActionPerformed
+        seleccionarAsiento(jButton48);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton48ActionPerformed
+
+    private void jButton49ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton49ActionPerformed
+        seleccionarAsiento(jButton49);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton49ActionPerformed
+
+    private void jButton50ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton50ActionPerformed
+        seleccionarAsiento(jButton50);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton50ActionPerformed
+
+    private void jButton51ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton51ActionPerformed
+        seleccionarAsiento(jButton51);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton51ActionPerformed
+
+    private void jButton52ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton52ActionPerformed
+        seleccionarAsiento(jButton52);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton52ActionPerformed
+
+    private void jButton53ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton53ActionPerformed
+        seleccionarAsiento(jButton53);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton53ActionPerformed
+
+    private void jButton54ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton54ActionPerformed
+        seleccionarAsiento(jButton54);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton54ActionPerformed
+
+    private void jButton55ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton55ActionPerformed
+        seleccionarAsiento(jButton55);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton55ActionPerformed
+
+    private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
+        if (datos.c > 0) {
+            JOptionPane.showMessageDialog(rootPane, "Faltan asientos por seleccionar...");
+        } else {
+            try {
+                jPanel2.setVisible(false);
+                jPanel3.setVisible(true);
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                jLabel42.setText(dtf.format(LocalDateTime.now()));
+                out.writeBoolean(true);
+                jLabel43.setText(String.valueOf(datos.sala));
+                jLabel44.setText(datos.pelicula);
+                jLabel45.setText(datos.nombre);
+                datos.setPrecio(58 * datos.asientos);
+                //jLabel46.setText(String.valueOf(datos.asientos));
+                jLabel47.setText(String.valueOf("$" + 58));
+                jLabel48.setText(String.valueOf("$" + datos.precio));
+                sc.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButton19ActionPerformed
+
+    public void seleccionarAsiento(JButton btn) {
+        if (datos.c == 0) {
+            JOptionPane.showMessageDialog(rootPane, "No te quedan asientos...");
+        } else {
+            if (btn.getBackground().equals(Color.green)) {
+                btn.setBackground(Color.gray);
+                datos.c++;
+            } else {
+                datos.c--;
+                btn.setBackground(Color.green);
+            }
+            jLabel27.setText("Asientos restantes: " + datos.c);
+
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -1371,83 +1593,7 @@ public class Cliente extends javax.swing.JFrame {
         });
     }
 
-    private void pintarImagen(JButton btn, String ruta) {
-        this.imagen = new ImageIcon(ruta);
-        this.icono = new ImageIcon(this.imagen.getImage().getScaledInstance(btn.getWidth(), btn.getHeight(), SCALE_SMOOTH));
-        btn.setIcon(this.icono);
-        btn.setBorder(null);
-        btn.setOpaque(true);
-        btn.setBackground(Color.LIGHT_GRAY);
-        btn.setContentAreaFilled(false);
-        btn.setFocusPainted(false);
-        this.repaint();
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private static javax.swing.JButton boton1;
-    private static javax.swing.JButton boton10;
-    private static javax.swing.JButton boton11;
-    private static javax.swing.JButton boton12;
-    private static javax.swing.JButton boton13;
-    private static javax.swing.JButton boton14;
-    private static javax.swing.JButton boton15;
-    private static javax.swing.JButton boton16;
-    private static javax.swing.JButton boton17;
-    private static javax.swing.JButton boton18;
-    private static javax.swing.JButton boton19;
-    private static javax.swing.JButton boton2;
-    private static javax.swing.JButton boton20;
-    private static javax.swing.JButton boton21;
-    private static javax.swing.JButton boton22;
-    private static javax.swing.JButton boton23;
-    private static javax.swing.JButton boton24;
-    private static javax.swing.JButton boton25;
-    private static javax.swing.JButton boton26;
-    private static javax.swing.JButton boton27;
-    private static javax.swing.JButton boton28;
-    private static javax.swing.JButton boton29;
-    private static javax.swing.JButton boton3;
-    private static javax.swing.JButton boton30;
-    private static javax.swing.JButton boton31;
-    private static javax.swing.JButton boton32;
-    private static javax.swing.JButton boton33;
-    private static javax.swing.JButton boton34;
-    private static javax.swing.JButton boton35;
-    private static javax.swing.JButton boton36;
-    private static javax.swing.JButton boton37;
-    private static javax.swing.JButton boton38;
-    private static javax.swing.JButton boton39;
-    private static javax.swing.JButton boton4;
-    private static javax.swing.JButton boton40;
-    private static javax.swing.JButton boton41;
-    private static javax.swing.JButton boton42;
-    private static javax.swing.JButton boton43;
-    private static javax.swing.JButton boton44;
-    private static javax.swing.JButton boton45;
-    private static javax.swing.JButton boton46;
-    private static javax.swing.JButton boton47;
-    private static javax.swing.JButton boton48;
-    private static javax.swing.JButton boton49;
-    private static javax.swing.JButton boton5;
-    private static javax.swing.JButton boton50;
-    private static javax.swing.JButton boton51;
-    private static javax.swing.JButton boton52;
-    private static javax.swing.JButton boton53;
-    private static javax.swing.JButton boton54;
-    private static javax.swing.JButton boton55;
-    private static javax.swing.JButton boton56;
-    private static javax.swing.JButton boton57;
-    private static javax.swing.JButton boton58;
-    private static javax.swing.JButton boton59;
-    private static javax.swing.JButton boton6;
-    private static javax.swing.JButton boton60;
-    private static javax.swing.JButton boton61;
-    private static javax.swing.JButton boton62;
-    private static javax.swing.JButton boton63;
-    private static javax.swing.JButton boton64;
-    private static javax.swing.JButton boton7;
-    private static javax.swing.JButton boton8;
-    private static javax.swing.JButton boton9;
     private static javax.swing.JPanel catalogo;
     private static javax.swing.JPanel formulario;
     private static javax.swing.JButton jButton1;
@@ -1462,9 +1608,45 @@ public class Cliente extends javax.swing.JFrame {
     private static javax.swing.JButton jButton18;
     private static javax.swing.JButton jButton19;
     private static javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton20;
+    private javax.swing.JButton jButton21;
+    private javax.swing.JButton jButton22;
+    private javax.swing.JButton jButton23;
+    private javax.swing.JButton jButton24;
+    private javax.swing.JButton jButton25;
+    private javax.swing.JButton jButton26;
+    private javax.swing.JButton jButton27;
+    private javax.swing.JButton jButton28;
+    private javax.swing.JButton jButton29;
     private static javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton30;
+    private javax.swing.JButton jButton31;
+    private javax.swing.JButton jButton32;
+    private javax.swing.JButton jButton33;
+    private javax.swing.JButton jButton34;
+    private javax.swing.JButton jButton35;
+    private javax.swing.JButton jButton36;
+    private javax.swing.JButton jButton37;
+    private javax.swing.JButton jButton38;
+    private javax.swing.JButton jButton39;
     private static javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton40;
+    private javax.swing.JButton jButton41;
+    private javax.swing.JButton jButton42;
+    private javax.swing.JButton jButton43;
+    private javax.swing.JButton jButton44;
+    private javax.swing.JButton jButton45;
+    private javax.swing.JButton jButton46;
+    private javax.swing.JButton jButton47;
+    private javax.swing.JButton jButton48;
+    private javax.swing.JButton jButton49;
     private static javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton50;
+    private javax.swing.JButton jButton51;
+    private javax.swing.JButton jButton52;
+    private javax.swing.JButton jButton53;
+    private javax.swing.JButton jButton54;
+    private javax.swing.JButton jButton55;
     private static javax.swing.JButton jButton6;
     private static javax.swing.JButton jButton7;
     private static javax.swing.JButton jButton8;
@@ -1488,8 +1670,29 @@ public class Cliente extends javax.swing.JFrame {
     private static javax.swing.JLabel jLabel24;
     private static javax.swing.JLabel jLabel25;
     private static javax.swing.JLabel jLabel26;
+    private static javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private static javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private static javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
     private static javax.swing.JLabel jLabel5;
     private static javax.swing.JLabel jLabel6;
     private static javax.swing.JLabel jLabel7;
@@ -1497,14 +1700,21 @@ public class Cliente extends javax.swing.JFrame {
     private static javax.swing.JLabel jLabel9;
     private static javax.swing.JPanel jPanel1;
     private static javax.swing.JPanel jPanel2;
+    private static javax.swing.JPanel jPanel3;
     private static javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator10;
+    private javax.swing.JSeparator jSeparator11;
     private static javax.swing.JSeparator jSeparator2;
     private static javax.swing.JSeparator jSeparator3;
     private static javax.swing.JSeparator jSeparator4;
     private static javax.swing.JSeparator jSeparator5;
     private static javax.swing.JSeparator jSeparator6;
+    private static javax.swing.JSeparator jSeparator7;
+    private static javax.swing.JSeparator jSeparator8;
+    private javax.swing.JSeparator jSeparator9;
     private static javax.swing.JTextField jTextField1;
     private static javax.swing.JTextField jTextField3;
     private static javax.swing.JLabel label1;
     // End of variables declaration//GEN-END:variables
+
 }

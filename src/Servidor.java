@@ -3,7 +3,6 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.logging.*;
-import javax.swing.JButton;
 
 public class Servidor {
 
@@ -12,7 +11,8 @@ public class Servidor {
 
     public static void main(String[] args) {
 
-        //datos = datos_file.leerRegistros();
+        datos = datos_file.leerRegistros();
+
         ServerSocket servidor = null;
         Socket sc = null;
         DataInputStream in;
@@ -30,20 +30,27 @@ public class Servidor {
 
                 in = new DataInputStream(sc.getInputStream());
                 out = new DataOutputStream(sc.getOutputStream());
-                
+
                 int inSala = in.read();
                 System.out.println(inSala);
-                
+
                 String inPelicula = in.readUTF();
                 System.out.println(inPelicula);
-                
+
                 String inNombre = in.readUTF();
                 System.out.println(inNombre);
-                
+
                 int inCantidad = in.read();
                 System.out.println(inCantidad);
 
-                
+                boolean inBandera = in.readBoolean();
+                System.out.println(inBandera);
+
+                if (inBandera) {
+                    datos.add(new Datos(inSala, inPelicula, inNombre, inCantidad, (58 * inCantidad)));
+                    datos_file.actualizarRegistros(datos);
+                }
+
                 sc.close();
                 System.out.println("Cliente desconectado...");
             }
