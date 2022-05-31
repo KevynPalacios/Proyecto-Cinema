@@ -143,10 +143,6 @@ public class Cliente extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         label1 = new javax.swing.JLabel();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
@@ -155,6 +151,10 @@ public class Cliente extends javax.swing.JFrame {
         jButton16 = new javax.swing.JButton();
         jButton17 = new javax.swing.JButton();
         jButton18 = new javax.swing.JButton();
+        trailer1 = new Trailer();
+        trailer2 = new Trailer();
+        trailer3 = new Trailer();
+        trailer4 = new Trailer();
         formulario = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -307,58 +307,6 @@ public class Cliente extends javax.swing.JFrame {
         catalogo.add(label1);
         label1.setBounds(490, 90, 318, 42);
 
-        jButton7.setBackground(new java.awt.Color(0, 102, 204));
-        jButton7.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText(">Ver Trailer");
-        jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-        catalogo.add(jButton7);
-        jButton7.setBounds(160, 680, 130, 22);
-
-        jButton8.setBackground(new java.awt.Color(0, 102, 204));
-        jButton8.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText(">Ver Trailer");
-        jButton8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
-            }
-        });
-        catalogo.add(jButton8);
-        jButton8.setBounds(470, 680, 130, 22);
-
-        jButton9.setBackground(new java.awt.Color(0, 102, 204));
-        jButton9.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText(">Ver Trailer");
-        jButton9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
-            }
-        });
-        catalogo.add(jButton9);
-        jButton9.setBounds(780, 680, 130, 22);
-
-        jButton10.setBackground(new java.awt.Color(0, 102, 204));
-        jButton10.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
-        jButton10.setForeground(new java.awt.Color(255, 255, 255));
-        jButton10.setText(">Ver Trailer");
-        jButton10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
-            }
-        });
-        catalogo.add(jButton10);
-        jButton10.setBounds(1090, 680, 130, 22);
-
         jButton11.setBackground(new java.awt.Color(102, 102, 102));
         jButton11.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jButton11.setForeground(new java.awt.Color(255, 255, 255));
@@ -414,6 +362,22 @@ public class Cliente extends javax.swing.JFrame {
         jButton18.setText("C");
         catalogo.add(jButton18);
         jButton18.setBounds(670, 680, 40, 22);
+
+        trailer1.setUrl("https://www.youtube.com/watch?v=fWQrd6cwJ0A");
+        catalogo.add(trailer1);
+        trailer1.setBounds(1090, 680, 88, 21);
+
+        trailer2.setUrl("https://www.youtube.com/watch?v=YHAL3XyDTaU");
+        catalogo.add(trailer2);
+        trailer2.setBounds(780, 680, 88, 21);
+
+        trailer3.setUrl("https://www.youtube.com/watch?v=C4XP8FSqTTE");
+        catalogo.add(trailer3);
+        trailer3.setBounds(470, 680, 88, 21);
+
+        trailer4.setUrl("https://www.youtube.com/watch?v=KREBGtEeW9U");
+        catalogo.add(trailer4);
+        trailer4.setBounds(160, 680, 88, 21);
 
         getContentPane().add(catalogo);
         catalogo.setBounds(0, 0, 1280, 720);
@@ -1009,42 +973,6 @@ public class Cliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField3MousePressed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        String url = "https://www.youtube.com/watch?v=KREBGtEeW9U";
-        try {
-            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
-        } catch (IOException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        String url = "https://www.youtube.com/watch?v=C4XP8FSqTTE";
-        try {
-            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
-        } catch (IOException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        String url = "https://www.youtube.com/watch?v=YHAL3XyDTaU";
-        try {
-            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
-        } catch (IOException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        String url = "https://www.youtube.com/watch?v=fWQrd6cwJ0A";
-        try {
-            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
-        } catch (IOException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton10ActionPerformed
-
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         try {
             datos.setNombre(jTextField1.getText());
@@ -1196,7 +1124,6 @@ public class Cliente extends javax.swing.JFrame {
     private static javax.swing.JPanel catalogo;
     private static javax.swing.JPanel formulario;
     private static javax.swing.JButton jButton1;
-    private static javax.swing.JButton jButton10;
     private static javax.swing.JButton jButton11;
     private static javax.swing.JButton jButton12;
     private static javax.swing.JButton jButton13;
@@ -1211,9 +1138,6 @@ public class Cliente extends javax.swing.JFrame {
     private static javax.swing.JButton jButton4;
     private static javax.swing.JButton jButton5;
     private static javax.swing.JButton jButton6;
-    private static javax.swing.JButton jButton7;
-    private static javax.swing.JButton jButton8;
-    private static javax.swing.JButton jButton9;
     private static javax.swing.JLabel jLabel1;
     private static javax.swing.JLabel jLabel10;
     private static javax.swing.JLabel jLabel11;
@@ -1278,6 +1202,10 @@ public class Cliente extends javax.swing.JFrame {
     private static javax.swing.JTextField jTextField1;
     private static javax.swing.JTextField jTextField3;
     private static javax.swing.JLabel label1;
+    private Trailer trailer1;
+    private Trailer trailer2;
+    private Trailer trailer3;
+    private Trailer trailer4;
     // End of variables declaration//GEN-END:variables
 
 }
