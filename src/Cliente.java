@@ -21,6 +21,8 @@
 
 import java.awt.Color;
 import static java.awt.Image.SCALE_SMOOTH;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.Socket;
 import java.time.LocalDateTime;
@@ -37,6 +39,63 @@ public class Cliente extends javax.swing.JFrame {
     static DataOutputStream out;
     static Socket sc;
     static Datos datos = new Datos();
+
+    int filas = 6;
+    int columnas = 6;
+    int largoBoton = 30;
+    int anchoBoton = 30;
+    int ejeX = 170;
+    int ejeY = 330;
+    String asientos;
+
+    public JToggleButton[][] JTBotones = new JToggleButton[filas][columnas];
+
+    public void botones() {
+
+        //Font font = new Font("Calibri",Font.PLAIN,4);
+        char ind[] = {'A', 'B', 'C', 'D', 'E', 'F'};
+        int contador = 1;
+        JTBotones = new JToggleButton[filas][columnas];
+
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                JTBotones[i][j] = new JToggleButton();
+                JTBotones[i][j].setBounds(ejeX, ejeY, largoBoton, anchoBoton);
+
+                JTBotones[i][j].setBackground(Color.green);
+                //JTBotones[i][j].setFont(font);
+                JTBotones[i][j].setText(ind[i] + "" + contador);
+
+                AccionBotones accion = new AccionBotones();
+                JTBotones[i][j].addActionListener(accion);
+
+                jPanel2.add(JTBotones[i][j]);
+
+                contador++;
+                ejeX += 30;
+            }
+            ejeX = 170;
+            ejeY += 30;
+        }
+    }
+
+    public class AccionBotones implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            for (int i = 0; i < filas; i++) {
+                for (int j = 0; j < columnas; j++) {
+                    if (e.getSource().equals(JTBotones[i][j])) {
+                        if (JTBotones[i][j].isSelected()) {
+                            //JTBotones[i][j].setBackground(Color.red);
+                            seleccionarAsiento(JTBotones[i][j]);
+                            asientos += ("" + JTBotones[i][j].getText() + ", ");
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     public Cliente() {
 
@@ -55,42 +114,8 @@ public class Cliente extends javax.swing.JFrame {
             sc = new Socket("localhost", PUERTO);
             out = new DataOutputStream(sc.getOutputStream());
 
-            /*botones[0][0] = jButton20;
-            botones[0][1] = jButton21;
-            botones[0][2] = jButton22;
-            botones[0][3] = jButton23;
-            botones[0][4] = jButton24;
-            botones[0][5] = jButton25;
-            botones[1][0] = jButton26;
-            botones[1][1] = jButton27;
-            botones[1][2] = jButton28;
-            botones[1][3] = jButton29;
-            botones[1][4] = jButton30;
-            botones[1][5] = jButton31;
-            botones[2][0] = jButton32;
-            botones[2][1] = jButton33;
-            botones[2][2] = jButton34;
-            botones[2][3] = jButton35;
-            botones[2][4] = jButton36;
-            botones[2][5] = jButton37;
-            botones[3][0] = jButton38;
-            botones[3][1] = jButton39;
-            botones[3][2] = jButton40;
-            botones[3][3] = jButton41;
-            botones[3][4] = jButton42;
-            botones[3][5] = jButton43;
-            botones[4][0] = jButton44;
-            botones[4][1] = jButton45;
-            botones[4][2] = jButton46;
-            botones[4][3] = jButton47;
-            botones[4][4] = jButton48;
-            botones[4][5] = jButton49;
-            botones[5][0] = jButton50;
-            botones[5][1] = jButton51;
-            botones[5][2] = jButton52;
-            botones[5][3] = jButton53;
-            botones[5][4] = jButton54;
-            botones[5][5] = jButton55;*/
+            botones();
+
         } catch (IOException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -166,42 +191,6 @@ public class Cliente extends javax.swing.JFrame {
         jSeparator6 = new javax.swing.JSeparator();
         jButton19 = new javax.swing.JButton();
         jLabel27 = new javax.swing.JLabel();
-        jButton20 = new javax.swing.JButton();
-        jButton21 = new javax.swing.JButton();
-        jButton22 = new javax.swing.JButton();
-        jButton23 = new javax.swing.JButton();
-        jButton24 = new javax.swing.JButton();
-        jButton25 = new javax.swing.JButton();
-        jButton26 = new javax.swing.JButton();
-        jButton27 = new javax.swing.JButton();
-        jButton28 = new javax.swing.JButton();
-        jButton29 = new javax.swing.JButton();
-        jButton30 = new javax.swing.JButton();
-        jButton31 = new javax.swing.JButton();
-        jButton32 = new javax.swing.JButton();
-        jButton33 = new javax.swing.JButton();
-        jButton34 = new javax.swing.JButton();
-        jButton35 = new javax.swing.JButton();
-        jButton36 = new javax.swing.JButton();
-        jButton37 = new javax.swing.JButton();
-        jButton38 = new javax.swing.JButton();
-        jButton39 = new javax.swing.JButton();
-        jButton40 = new javax.swing.JButton();
-        jButton41 = new javax.swing.JButton();
-        jButton42 = new javax.swing.JButton();
-        jButton43 = new javax.swing.JButton();
-        jButton44 = new javax.swing.JButton();
-        jButton45 = new javax.swing.JButton();
-        jButton46 = new javax.swing.JButton();
-        jButton47 = new javax.swing.JButton();
-        jButton48 = new javax.swing.JButton();
-        jButton49 = new javax.swing.JButton();
-        jButton50 = new javax.swing.JButton();
-        jButton51 = new javax.swing.JButton();
-        jButton52 = new javax.swing.JButton();
-        jButton53 = new javax.swing.JButton();
-        jButton54 = new javax.swing.JButton();
-        jButton55 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -269,6 +258,11 @@ public class Cliente extends javax.swing.JFrame {
                 jButton3MouseExited(evt);
             }
         });
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         catalogo.add(jButton3);
         jButton3.setBounds(640, 210, 300, 470);
 
@@ -282,6 +276,11 @@ public class Cliente extends javax.swing.JFrame {
                 jButton2MouseExited(evt);
             }
         });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         catalogo.add(jButton2);
         jButton2.setBounds(330, 210, 300, 470);
 
@@ -293,6 +292,11 @@ public class Cliente extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jButton4MouseExited(evt);
+            }
+        });
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
             }
         });
         catalogo.add(jButton4);
@@ -707,330 +711,6 @@ public class Cliente extends javax.swing.JFrame {
         jPanel2.add(jLabel27);
         jLabel27.setBounds(0, 270, 510, 40);
 
-        jButton20.setBackground(java.awt.Color.gray);
-        jButton20.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton20ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton20);
-        jButton20.setBounds(170, 330, 30, 30);
-
-        jButton21.setBackground(java.awt.Color.gray);
-        jButton21.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton21ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton21);
-        jButton21.setBounds(200, 330, 30, 30);
-
-        jButton22.setBackground(java.awt.Color.gray);
-        jButton22.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton22ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton22);
-        jButton22.setBounds(230, 330, 30, 30);
-
-        jButton23.setBackground(java.awt.Color.gray);
-        jButton23.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton23ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton23);
-        jButton23.setBounds(260, 330, 30, 30);
-
-        jButton24.setBackground(java.awt.Color.gray);
-        jButton24.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton24ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton24);
-        jButton24.setBounds(290, 330, 30, 30);
-
-        jButton25.setBackground(java.awt.Color.gray);
-        jButton25.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton25ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton25);
-        jButton25.setBounds(320, 330, 30, 30);
-
-        jButton26.setBackground(java.awt.Color.gray);
-        jButton26.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton26ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton26);
-        jButton26.setBounds(170, 360, 30, 30);
-
-        jButton27.setBackground(java.awt.Color.gray);
-        jButton27.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton27ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton27);
-        jButton27.setBounds(200, 360, 30, 30);
-
-        jButton28.setBackground(java.awt.Color.gray);
-        jButton28.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton28ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton28);
-        jButton28.setBounds(230, 360, 30, 30);
-
-        jButton29.setBackground(java.awt.Color.gray);
-        jButton29.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton29ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton29);
-        jButton29.setBounds(260, 360, 30, 30);
-
-        jButton30.setBackground(java.awt.Color.gray);
-        jButton30.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton30ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton30);
-        jButton30.setBounds(290, 360, 30, 30);
-
-        jButton31.setBackground(java.awt.Color.gray);
-        jButton31.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton31ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton31);
-        jButton31.setBounds(320, 360, 30, 30);
-
-        jButton32.setBackground(java.awt.Color.gray);
-        jButton32.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton32ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton32);
-        jButton32.setBounds(170, 390, 30, 30);
-
-        jButton33.setBackground(java.awt.Color.gray);
-        jButton33.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton33ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton33);
-        jButton33.setBounds(200, 390, 30, 30);
-
-        jButton34.setBackground(java.awt.Color.gray);
-        jButton34.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton34ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton34);
-        jButton34.setBounds(230, 390, 30, 30);
-
-        jButton35.setBackground(java.awt.Color.gray);
-        jButton35.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton35ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton35);
-        jButton35.setBounds(260, 390, 30, 30);
-
-        jButton36.setBackground(java.awt.Color.gray);
-        jButton36.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton36ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton36);
-        jButton36.setBounds(290, 390, 30, 30);
-
-        jButton37.setBackground(java.awt.Color.gray);
-        jButton37.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton37ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton37);
-        jButton37.setBounds(320, 390, 30, 30);
-
-        jButton38.setBackground(java.awt.Color.gray);
-        jButton38.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton38ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton38);
-        jButton38.setBounds(170, 420, 30, 30);
-
-        jButton39.setBackground(java.awt.Color.gray);
-        jButton39.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton39ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton39);
-        jButton39.setBounds(200, 420, 30, 30);
-
-        jButton40.setBackground(java.awt.Color.gray);
-        jButton40.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton40ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton40);
-        jButton40.setBounds(230, 420, 30, 30);
-
-        jButton41.setBackground(java.awt.Color.gray);
-        jButton41.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton41ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton41);
-        jButton41.setBounds(260, 420, 30, 30);
-
-        jButton42.setBackground(java.awt.Color.gray);
-        jButton42.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton42ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton42);
-        jButton42.setBounds(290, 420, 30, 30);
-
-        jButton43.setBackground(java.awt.Color.gray);
-        jButton43.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton43ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton43);
-        jButton43.setBounds(320, 420, 30, 30);
-
-        jButton44.setBackground(java.awt.Color.gray);
-        jButton44.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton44ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton44);
-        jButton44.setBounds(170, 450, 30, 30);
-
-        jButton45.setBackground(java.awt.Color.gray);
-        jButton45.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton45ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton45);
-        jButton45.setBounds(200, 450, 30, 30);
-
-        jButton46.setBackground(java.awt.Color.gray);
-        jButton46.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton46ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton46);
-        jButton46.setBounds(230, 450, 30, 30);
-
-        jButton47.setBackground(java.awt.Color.gray);
-        jButton47.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton47ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton47);
-        jButton47.setBounds(260, 450, 30, 30);
-
-        jButton48.setBackground(java.awt.Color.gray);
-        jButton48.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton48ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton48);
-        jButton48.setBounds(290, 450, 30, 30);
-
-        jButton49.setBackground(java.awt.Color.gray);
-        jButton49.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton49ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton49);
-        jButton49.setBounds(320, 450, 30, 30);
-
-        jButton50.setBackground(java.awt.Color.gray);
-        jButton50.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton50ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton50);
-        jButton50.setBounds(170, 480, 30, 30);
-
-        jButton51.setBackground(java.awt.Color.gray);
-        jButton51.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton51ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton51);
-        jButton51.setBounds(200, 480, 30, 30);
-
-        jButton52.setBackground(java.awt.Color.gray);
-        jButton52.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton52ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton52);
-        jButton52.setBounds(230, 480, 30, 30);
-
-        jButton53.setBackground(java.awt.Color.gray);
-        jButton53.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton53ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton53);
-        jButton53.setBounds(260, 480, 30, 30);
-
-        jButton54.setBackground(java.awt.Color.gray);
-        jButton54.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton54ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton54);
-        jButton54.setBounds(290, 480, 30, 30);
-
-        jButton55.setBackground(java.awt.Color.gray);
-        jButton55.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton55ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton55);
-        jButton55.setBounds(320, 480, 30, 30);
-
         formulario.add(jPanel2);
         jPanel2.setBounds(60, 30, 510, 677);
 
@@ -1227,7 +907,7 @@ public class Cliente extends javax.swing.JFrame {
         jLabel46.setForeground(new java.awt.Color(102, 102, 102));
         jLabel46.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jPanel3.add(jLabel46);
-        jLabel46.setBounds(260, 440, 150, 20);
+        jLabel46.setBounds(180, 440, 230, 20);
 
         jLabel47.setBackground(new java.awt.Color(255, 255, 255));
         jLabel47.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -1380,152 +1060,16 @@ public class Cliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-        seleccionarAsiento(jButton20);
-    }//GEN-LAST:event_jButton20ActionPerformed
-
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                JTBotones[i][j].setBackground(Color.green);
+                asientos = "";
+                datos.setC(datos.asientos);
+                jLabel27.setText("Asientos restantes: " + datos.c);
+            }
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
-        seleccionarAsiento(jButton21);
-    }//GEN-LAST:event_jButton21ActionPerformed
-
-    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
-        seleccionarAsiento(jButton22);// TODO add your handling code here:
-    }//GEN-LAST:event_jButton22ActionPerformed
-
-    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
-        seleccionarAsiento(jButton23);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton23ActionPerformed
-
-    private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
-        seleccionarAsiento(jButton24);    }//GEN-LAST:event_jButton24ActionPerformed
-
-    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
-        seleccionarAsiento(jButton25);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton25ActionPerformed
-
-    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
-        seleccionarAsiento(jButton26);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton26ActionPerformed
-
-    private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
-        seleccionarAsiento(jButton27);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton27ActionPerformed
-
-    private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
-        seleccionarAsiento(jButton28);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton28ActionPerformed
-
-    private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
-        seleccionarAsiento(jButton29);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton29ActionPerformed
-
-    private void jButton30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton30ActionPerformed
-        seleccionarAsiento(jButton30);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton30ActionPerformed
-
-    private void jButton31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton31ActionPerformed
-        seleccionarAsiento(jButton31);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton31ActionPerformed
-
-    private void jButton32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton32ActionPerformed
-        seleccionarAsiento(jButton32);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton32ActionPerformed
-
-    private void jButton33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton33ActionPerformed
-        seleccionarAsiento(jButton33);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton33ActionPerformed
-
-    private void jButton34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton34ActionPerformed
-        seleccionarAsiento(jButton34);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton34ActionPerformed
-
-    private void jButton35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton35ActionPerformed
-        seleccionarAsiento(jButton35);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton35ActionPerformed
-
-    private void jButton36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton36ActionPerformed
-        seleccionarAsiento(jButton36);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton36ActionPerformed
-
-    private void jButton37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton37ActionPerformed
-        seleccionarAsiento(jButton37);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton37ActionPerformed
-
-    private void jButton38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton38ActionPerformed
-        seleccionarAsiento(jButton38);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton38ActionPerformed
-
-    private void jButton39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton39ActionPerformed
-        seleccionarAsiento(jButton39);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton39ActionPerformed
-
-    private void jButton40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton40ActionPerformed
-        seleccionarAsiento(jButton40);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton40ActionPerformed
-
-    private void jButton41ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton41ActionPerformed
-        seleccionarAsiento(jButton41);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton41ActionPerformed
-
-    private void jButton42ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton42ActionPerformed
-        seleccionarAsiento(jButton42);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton42ActionPerformed
-
-    private void jButton43ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton43ActionPerformed
-        seleccionarAsiento(jButton43);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton43ActionPerformed
-
-    private void jButton44ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton44ActionPerformed
-        seleccionarAsiento(jButton44);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton44ActionPerformed
-
-    private void jButton45ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton45ActionPerformed
-        seleccionarAsiento(jButton45);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton45ActionPerformed
-
-    private void jButton46ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton46ActionPerformed
-        seleccionarAsiento(jButton46);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton46ActionPerformed
-
-    private void jButton47ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton47ActionPerformed
-        seleccionarAsiento(jButton47);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton47ActionPerformed
-
-    private void jButton48ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton48ActionPerformed
-        seleccionarAsiento(jButton48);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton48ActionPerformed
-
-    private void jButton49ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton49ActionPerformed
-        seleccionarAsiento(jButton49);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton49ActionPerformed
-
-    private void jButton50ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton50ActionPerformed
-        seleccionarAsiento(jButton50);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton50ActionPerformed
-
-    private void jButton51ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton51ActionPerformed
-        seleccionarAsiento(jButton51);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton51ActionPerformed
-
-    private void jButton52ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton52ActionPerformed
-        seleccionarAsiento(jButton52);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton52ActionPerformed
-
-    private void jButton53ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton53ActionPerformed
-        seleccionarAsiento(jButton53);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton53ActionPerformed
-
-    private void jButton54ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton54ActionPerformed
-        seleccionarAsiento(jButton54);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton54ActionPerformed
-
-    private void jButton55ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton55ActionPerformed
-        seleccionarAsiento(jButton55);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton55ActionPerformed
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
         if (datos.c > 0) {
@@ -1541,7 +1085,8 @@ public class Cliente extends javax.swing.JFrame {
                 jLabel44.setText(datos.pelicula);
                 jLabel45.setText(datos.nombre);
                 datos.setPrecio(58 * datos.asientos);
-                //jLabel46.setText(String.valueOf(datos.asientos));
+                datos.setDistribucion(asientos);
+                jLabel46.setText(String.valueOf(datos.distribucion));
                 jLabel47.setText(String.valueOf("$" + 58));
                 jLabel48.setText(String.valueOf("$" + datos.precio));
                 sc.close();
@@ -1551,16 +1096,70 @@ public class Cliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton19ActionPerformed
 
-    public void seleccionarAsiento(JButton btn) {
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            datos.setSala(2);
+            out.write(2);
+            datos.setPelicula("Morbius");
+            out.writeUTF("Morbius");
+
+            catalogo.setVisible(false);
+            formulario.setVisible(true);
+            jPanel2.setVisible(false);
+            jPanel1.setVisible(true);
+            this.setSize(633, 763);
+            this.setTitle("Formulario");
+            this.setLocationRelativeTo(null);
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            datos.setSala(3);
+            out.write(3);
+            datos.setPelicula("X 2022");
+            out.writeUTF("X 2022");
+
+            catalogo.setVisible(false);
+            formulario.setVisible(true);
+            jPanel2.setVisible(false);
+            jPanel1.setVisible(true);
+            this.setSize(633, 763);
+            this.setTitle("Formulario");
+            this.setLocationRelativeTo(null);
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            datos.setSala(4);
+            out.write(4);
+            datos.setPelicula("The Batman");
+            out.writeUTF("The Batman");
+
+            catalogo.setVisible(false);
+            formulario.setVisible(true);
+            jPanel2.setVisible(false);
+            jPanel1.setVisible(true);
+            this.setSize(633, 763);
+            this.setTitle("Formulario");
+            this.setLocationRelativeTo(null);
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    public void seleccionarAsiento(JToggleButton btn) {
         if (datos.c == 0) {
             JOptionPane.showMessageDialog(rootPane, "No te quedan asientos...");
         } else {
             if (btn.getBackground().equals(Color.green)) {
-                btn.setBackground(Color.gray);
-                datos.c++;
-            } else {
+                btn.setBackground(Color.red);
                 datos.c--;
-                btn.setBackground(Color.green);
             }
             jLabel27.setText("Asientos restantes: " + datos.c);
 
@@ -1608,45 +1207,9 @@ public class Cliente extends javax.swing.JFrame {
     private static javax.swing.JButton jButton18;
     private static javax.swing.JButton jButton19;
     private static javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton20;
-    private javax.swing.JButton jButton21;
-    private javax.swing.JButton jButton22;
-    private javax.swing.JButton jButton23;
-    private javax.swing.JButton jButton24;
-    private javax.swing.JButton jButton25;
-    private javax.swing.JButton jButton26;
-    private javax.swing.JButton jButton27;
-    private javax.swing.JButton jButton28;
-    private javax.swing.JButton jButton29;
     private static javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton30;
-    private javax.swing.JButton jButton31;
-    private javax.swing.JButton jButton32;
-    private javax.swing.JButton jButton33;
-    private javax.swing.JButton jButton34;
-    private javax.swing.JButton jButton35;
-    private javax.swing.JButton jButton36;
-    private javax.swing.JButton jButton37;
-    private javax.swing.JButton jButton38;
-    private javax.swing.JButton jButton39;
     private static javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton40;
-    private javax.swing.JButton jButton41;
-    private javax.swing.JButton jButton42;
-    private javax.swing.JButton jButton43;
-    private javax.swing.JButton jButton44;
-    private javax.swing.JButton jButton45;
-    private javax.swing.JButton jButton46;
-    private javax.swing.JButton jButton47;
-    private javax.swing.JButton jButton48;
-    private javax.swing.JButton jButton49;
     private static javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton50;
-    private javax.swing.JButton jButton51;
-    private javax.swing.JButton jButton52;
-    private javax.swing.JButton jButton53;
-    private javax.swing.JButton jButton54;
-    private javax.swing.JButton jButton55;
     private static javax.swing.JButton jButton6;
     private static javax.swing.JButton jButton7;
     private static javax.swing.JButton jButton8;

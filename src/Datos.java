@@ -1,12 +1,12 @@
 
 import java.io.Serializable;
 
-
-public class Datos implements Serializable{
+public class Datos implements Serializable {
 
     int sala;
     String pelicula;
     String nombre;
+    String distribucion;
     int asientos;
     int c;
     float precio;
@@ -33,6 +33,10 @@ public class Datos implements Serializable{
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public void setDistribucion(String distribucion) {
+        this.distribucion = distribucion;
     }
 
     public void setAsientos(int asientos) {

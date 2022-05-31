@@ -6,12 +6,22 @@ import java.util.logging.*;
 
 public class Servidor {
 
-    static ArrayList<Datos> datos = new ArrayList<>();
-    static Archivo_generics<Datos> datos_file = new Archivo_generics<Datos>("datos.ser");
+    static ArrayList<Datos> sala1 = new ArrayList<>(36);
+    static ArrayList<Datos> sala2 = new ArrayList<>(36);
+    static ArrayList<Datos> sala3 = new ArrayList<>(36);
+    static ArrayList<Datos> sala4 = new ArrayList<>(36);
+
+    static Archivo_generics<Datos> sala1_a = new Archivo_generics<Datos>("sala1.ser");
+    static Archivo_generics<Datos> sala2_a = new Archivo_generics<Datos>("sala2.ser");
+    static Archivo_generics<Datos> sala3_a = new Archivo_generics<Datos>("sala3.ser");
+    static Archivo_generics<Datos> sala4_a = new Archivo_generics<Datos>("sala4.ser");
 
     public static void main(String[] args) {
 
-        datos = datos_file.leerRegistros();
+        sala1 = sala1_a.leerRegistros();
+        sala2 = sala2_a.leerRegistros();
+        sala3 = sala3_a.leerRegistros();
+        sala4 = sala4_a.leerRegistros();
 
         ServerSocket servidor = null;
         Socket sc = null;
@@ -47,10 +57,25 @@ public class Servidor {
                 System.out.println(inBandera);
 
                 if (inBandera) {
-                    datos.add(new Datos(inSala, inPelicula, inNombre, inCantidad, (58 * inCantidad)));
-                    datos_file.actualizarRegistros(datos);
+                    switch (inSala) {
+                        case 1:
+                            sala1.add(new Datos(inSala, inPelicula, inNombre, inCantidad, inSala));
+                            sala1_a.actualizarRegistros(sala1);
+                            break;
+                        case 2:
+                            sala2.add(new Datos(inSala, inPelicula, inNombre, inCantidad, inSala));
+                            sala2_a.actualizarRegistros(sala1);
+                            break;
+                        case 3:
+                            sala3.add(new Datos(inSala, inPelicula, inNombre, inCantidad, inSala));
+                            sala3_a.actualizarRegistros(sala1);
+                            break;
+                        case 4:
+                            sala4.add(new Datos(inSala, inPelicula, inNombre, inCantidad, inSala));
+                            sala4_a.actualizarRegistros(sala1);
+                            break;
+                    }
                 }
-
                 sc.close();
                 System.out.println("Cliente desconectado...");
             }
