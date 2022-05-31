@@ -20,9 +20,15 @@
  */
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import static java.awt.Image.SCALE_SMOOTH;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.io.*;
 import java.net.Socket;
 import java.time.LocalDateTime;
@@ -30,7 +36,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.logging.*;
 import javax.swing.*;
 
-public class Cliente extends javax.swing.JFrame {
+public class Cliente extends javax.swing.JFrame implements Printable{
 
     private ImageIcon imagen;
     private Icon icono;
@@ -77,6 +83,19 @@ public class Cliente extends javax.swing.JFrame {
             ejeX = 170;
             ejeY += 30;
         }
+    }
+
+    @Override
+    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+        if(pageIndex > 0){
+            return NO_SUCH_PAGE;
+        }
+        Graphics2D hub = (Graphics2D) graphics;
+        hub.translate(pageFormat.getImageableX() + 30 , pageFormat.getImageableY() + 30);
+        hub.scale(1.0, 1.0);
+        
+        jPanel3.printAll(graphics);
+        return PAGE_EXISTS;
     }
 
     public class AccionBotones implements ActionListener {
@@ -221,6 +240,7 @@ public class Cliente extends javax.swing.JFrame {
         jLabel46 = new javax.swing.JLabel();
         jLabel47 = new javax.swing.JLabel();
         jLabel48 = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -887,6 +907,15 @@ public class Cliente extends javax.swing.JFrame {
         jPanel3.add(jLabel48);
         jLabel48.setBounds(260, 520, 150, 20);
 
+        jButton7.setText("Imprimir");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton7);
+        jButton7.setBounds(405, 640, 90, 22);
+
         formulario.add(jPanel3);
         jPanel3.setBounds(60, 30, 510, 677);
 
@@ -1081,6 +1110,19 @@ public class Cliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        try{
+            PrinterJob gap = PrinterJob.getPrinterJob();
+            gap.setPrintable(this);
+            boolean top = gap.printDialog();
+            if(top){
+                gap.print();
+            }
+        } catch (PrinterException ex){
+            JOptionPane.showMessageDialog(rootPane, "Error");
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
     public void seleccionarAsiento(JToggleButton btn) {
         if (datos.c == 0) {
             JOptionPane.showMessageDialog(rootPane, "No te quedan asientos...");
@@ -1138,6 +1180,7 @@ public class Cliente extends javax.swing.JFrame {
     private static javax.swing.JButton jButton4;
     private static javax.swing.JButton jButton5;
     private static javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private static javax.swing.JLabel jLabel1;
     private static javax.swing.JLabel jLabel10;
     private static javax.swing.JLabel jLabel11;
