@@ -1,19 +1,4 @@
 /*      
-        Atención al cliente de un cine
-        Este programa se encarga de despachar o atender una cola de clientes para la venta de boletos en una función de cine.
-        
-        Cliente
-        El cliente podrá seleccionar mediante una interfaz gráfica la pelicula de la cual desea adquirir los boletos, posteriormente
-        se le mostrará una pantalla con los datos requeridos para finalizar la compra, estos datos son: Nombre o responsable de la
-        orden, número de personas o boletos, según la cantidad de personas se le solicitará seleccionar los asientos que van desde
-        la A a la N cada fila con 14 asientos disponibles, una vez determinado los asientos se imprimirá en pantalla un recibo de
-        compra con los datos relevantes y el monto final de la orden, para posteriormente cerrar la sesión.
-        
-        Servidor
-        El servidor recibirá el número de sala en base a la pelicula seleccionada por el cliente, a continuación tomará los datos de
-        la orden y calculará el monto final, los almacenará en un archivo de datos y por ultimo actualizará una tabla con la información
-        de cada cliente para la sala de cine seleccionada.
-        
         Integrantes:
         Kevyn Enrique Palacios Bojorquez
         Juan Carlos Garcia
@@ -36,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.logging.*;
 import javax.swing.*;
 
-public class Cliente extends javax.swing.JFrame implements Printable{
+public class Cliente extends javax.swing.JFrame implements Printable {
 
     private ImageIcon imagen;
     private Icon icono;
@@ -87,13 +72,13 @@ public class Cliente extends javax.swing.JFrame implements Printable{
 
     @Override
     public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-        if(pageIndex > 0){
+        if (pageIndex > 0) {
             return NO_SUCH_PAGE;
         }
         Graphics2D hub = (Graphics2D) graphics;
-        hub.translate(pageFormat.getImageableX() + 30 , pageFormat.getImageableY() + 30);
+        hub.translate(pageFormat.getImageableX() + 30, pageFormat.getImageableY() + 30);
         hub.scale(1.0, 1.0);
-        
+
         jPanel3.printAll(graphics);
         return PAGE_EXISTS;
     }
@@ -1004,14 +989,26 @@ public class Cliente extends javax.swing.JFrame implements Printable{
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         try {
+            boolean numeric = false;
+            while (!numeric) {
+                numeric = isNumeric(jTextField3.getText());
+                if (!numeric) {
+                    JOptionPane.showMessageDialog(rootPane, "Debes insertar un número");
+                    break;
+                }
+            }
             datos.setNombre(jTextField1.getText());
-            out.writeUTF(jTextField1.getText());
             datos.setAsientos(Integer.parseInt(jTextField3.getText()));
             datos.setC(Integer.parseInt(jTextField3.getText()));
+
+            out.writeUTF(jTextField1.getText());
             out.write(Integer.parseInt(jTextField3.getText()));
+
             jLabel27.setText("Asientos restantes: " + datos.c);
             jPanel1.setVisible(false);
+            jButton7.setVisible(false);
             jPanel2.setVisible(true);
+
         } catch (IOException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1033,6 +1030,7 @@ public class Cliente extends javax.swing.JFrame implements Printable{
             JOptionPane.showMessageDialog(rootPane, "Faltan asientos por seleccionar...");
         } else {
             try {
+                jButton7.setVisible(true);
                 jPanel2.setVisible(false);
                 jPanel3.setVisible(true);
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -1111,14 +1109,14 @@ public class Cliente extends javax.swing.JFrame implements Printable{
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        try{
+        try {
             PrinterJob gap = PrinterJob.getPrinterJob();
             gap.setPrintable(this);
             boolean top = gap.printDialog();
-            if(top){
+            if (top) {
                 gap.print();
             }
-        } catch (PrinterException ex){
+        } catch (PrinterException ex) {
             JOptionPane.showMessageDialog(rootPane, "Error");
         }
     }//GEN-LAST:event_jButton7ActionPerformed
@@ -1160,6 +1158,15 @@ public class Cliente extends javax.swing.JFrame implements Printable{
                 new Cliente().setVisible(true);
             }
         });
+    }
+
+    private static boolean isNumeric(String cadena) {
+        try {
+            Integer.parseInt(cadena);
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
