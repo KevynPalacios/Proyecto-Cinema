@@ -1,12 +1,11 @@
 
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -15,12 +14,11 @@ import javax.swing.table.DefaultTableModel;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author Juan Carlos
  */
-public class GUI extends javax.swing.JFrame implements Runnable{
+public class GUI extends javax.swing.JFrame implements Runnable {
 
     /**
      * Creates new form GUI
@@ -30,31 +28,35 @@ public class GUI extends javax.swing.JFrame implements Runnable{
     ArrayList<Datos> sala3 = new ArrayList<>(36);
     ArrayList<Datos> sala4 = new ArrayList<>(36);
 
+    ArrayList<Datos> aux = new ArrayList<>();
+
     Archivo_generics<Datos> sala1_a = new Archivo_generics<Datos>("sala1.ser");
     Archivo_generics<Datos> sala2_a = new Archivo_generics<Datos>("sala2.ser");
     Archivo_generics<Datos> sala3_a = new Archivo_generics<Datos>("sala3.ser");
     Archivo_generics<Datos> sala4_a = new Archivo_generics<Datos>("sala4.ser");
-    
+
     DefaultTableModel dft;
-    
+
     public GUI() {
         initComponents();
+        jButton1.setEnabled(false);
         initModelTable();
         Thread thread = new Thread(this);
         thread.start();
+        
     }
-    
+
     private void initModelTable() {
         dft = new DefaultTableModel();
-        String cabecera[] = {"Sala","Pelicula", "Nombre", "Cantidad"};
+        String cabecera[] = {"Sala", "Pelicula", "Nombre", "Cantidad"};
         dft.setColumnIdentifiers(cabecera);
         table.setModel(dft);
     }
-    
+
     private void updateTable(ArrayList<Datos> sala) {
         Object[] elementos = new Object[dft.getColumnCount()];
         dft.setRowCount(0);
-        
+
         for (Datos dato : sala) {
             elementos[0] = dato.getSala();
             elementos[1] = dato.getPelicula();
@@ -64,9 +66,9 @@ public class GUI extends javax.swing.JFrame implements Runnable{
         }
         table.setModel(dft);
         validate();
-        
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -85,6 +87,8 @@ public class GUI extends javax.swing.JFrame implements Runnable{
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         comboBox2 = new javax.swing.JComboBox<>();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cinema database server");
@@ -109,16 +113,21 @@ public class GUI extends javax.swing.JFrame implements Runnable{
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        jPanel2.setPreferredSize(new java.awt.Dimension(600, 200));
+        jPanel2.setPreferredSize(new java.awt.Dimension(600, 150));
         jPanel2.setLayout(null);
 
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel1.setText("Buscar elemento");
+        jLabel1.setText("Buscar elemento:");
         jPanel2.add(jLabel1);
-        jLabel1.setBounds(10, 50, 100, 16);
-        jPanel2.add(jTextField1);
-        jTextField1.setBounds(10, 70, 300, 22);
+        jLabel1.setBounds(10, 50, 290, 17);
 
+        jTextField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jPanel2.add(jTextField1);
+        jTextField1.setBounds(300, 50, 290, 25);
+
+        jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,24 +135,65 @@ public class GUI extends javax.swing.JFrame implements Runnable{
             }
         });
         jPanel2.add(jButton1);
-        jButton1.setBounds(320, 70, 72, 22);
+        jButton1.setBounds(300, 80, 290, 25);
 
-        jLabel2.setText("Ordenar por");
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Ordenar por:");
         jPanel2.add(jLabel2);
-        jLabel2.setBounds(10, 110, 100, 16);
+        jLabel2.setBounds(10, 20, 100, 17);
 
-        comboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asientos", "Nombre" }));
+        comboBox2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        comboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sala", "Pelicula", "Nombre", "Asientos" }));
+        comboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBox2ActionPerformed(evt);
+            }
+        });
         jPanel2.add(comboBox2);
-        comboBox2.setBounds(110, 110, 100, 22);
+        comboBox2.setBounds(300, 20, 100, 25);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_END);
+
+        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel3.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("CINEMA DATABASE ");
+        jPanel3.add(jLabel3);
+
+        getContentPane().add(jPanel3, java.awt.BorderLayout.PAGE_START);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
- 
+        ArrayList<Datos> array = new ArrayList<>();
+        int pos = Collections.binarySearch(aux, new Datos(0, "", jTextField1.getText(), 0, 0));
+        if (pos!=-1)
+            array.add(aux.get(pos));
+        updateTable(array);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void comboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBox2ActionPerformed
+        if (comboBox2.getSelectedItem().equals("Nombre")) {
+            Collections.sort(aux);
+            updateTable(aux);
+            jButton1.setEnabled(true);
+        } else if (comboBox2.getSelectedItem().equals("Asientos")) {
+            Collections.sort(aux,new OrdenarPorAsiento());
+            updateTable(aux);
+            jButton1.setEnabled(false);
+        } else if (comboBox2.getSelectedItem().equals("Pelicula")){
+            Collections.sort(aux,new OrdenarPorPelicula());
+            updateTable(aux);
+            jButton1.setEnabled(false);
+        } else {
+            Collections.sort(aux,new OrdenarPorSala());
+            updateTable(aux);
+            jButton1.setEnabled(false);
+        }
+    }//GEN-LAST:event_comboBox2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -185,8 +235,10 @@ public class GUI extends javax.swing.JFrame implements Runnable{
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTable table;
@@ -194,25 +246,27 @@ public class GUI extends javax.swing.JFrame implements Runnable{
 
     @Override
     public void run() {
-        
+
         sala1 = sala1_a.leerRegistros();
         sala2 = sala2_a.leerRegistros();
         sala3 = sala3_a.leerRegistros();
         sala4 = sala4_a.leerRegistros();
-        
-        ArrayList<Datos> aux = new ArrayList<>();
-        
-        if (!sala1.isEmpty())
-            addInformation(aux, sala1);
-        if (!sala2.isEmpty())
-            addInformation(aux, sala2);
-        if (!sala3.isEmpty())
-            addInformation(aux, sala3);
-        if (!sala4.isEmpty())
-            addInformation(aux, sala4);
-        
+
+        if (!sala1.isEmpty()) {
+            addInformation(sala1);
+        }
+        if (!sala2.isEmpty()) {
+            addInformation(sala2);
+        }
+        if (!sala3.isEmpty()) {
+            addInformation(sala3);
+        }
+        if (!sala4.isEmpty()) {
+            addInformation(sala4);
+        }
+
         updateTable(aux);
-        
+
         ServerSocket servidor = null;
         Socket sc = null;
         DataInputStream in;
@@ -276,10 +330,11 @@ public class GUI extends javax.swing.JFrame implements Runnable{
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void addInformation(ArrayList<Datos> array, ArrayList<Datos> info) {
+
+    private void addInformation(ArrayList<Datos> info) {
         for (Datos datos : info) {
-            array.add(datos);
+            aux.add(datos);
         }
     }
-    
+
 }
