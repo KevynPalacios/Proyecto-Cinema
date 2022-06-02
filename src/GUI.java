@@ -39,6 +39,7 @@ public class GUI extends javax.swing.JFrame implements Runnable {
 
     public GUI() {
         initComponents();
+        setLocationRelativeTo(null);
         jButton1.setEnabled(false);
         initModelTable();
         Thread thread = new Thread(this);

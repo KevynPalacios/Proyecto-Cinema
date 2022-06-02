@@ -72,6 +72,7 @@ public class Servidor {
                             break;
                         case 4:
                             sala4.add(new Datos(inSala, inPelicula, inNombre, inCantidad, inSala));
+                            
                             sala4_a.actualizarRegistros(sala1);
                             break;
                     }
