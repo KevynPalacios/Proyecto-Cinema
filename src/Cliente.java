@@ -25,7 +25,7 @@ public class Cliente extends javax.swing.JFrame implements Printable {
 
     private ImageIcon imagen;
     private Icon icono;
-    static final int PUERTO = 3000;
+    static final int PUERTO = 9999;
     static DataInputStream in;
     static DataOutputStream out;
     static Socket sc;
