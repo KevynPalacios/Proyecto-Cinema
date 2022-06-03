@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -334,7 +335,7 @@ public class GUI extends javax.swing.JFrame implements Runnable {
                 System.out.println("Cliente desconectado...");
             }
         } catch (IOException ex) {
-            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Ocurrio un error con la conexion", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
