@@ -1,9 +1,13 @@
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Random;
 
 public class Datos implements Serializable, Comparable<Datos>{
 
+    static ArrayList<Integer> ids = new ArrayList<>();
+    int id;
     int sala;
     String pelicula;
     String nombre;
@@ -17,11 +21,22 @@ public class Datos implements Serializable, Comparable<Datos>{
     }
 
     public Datos(int sala, String pelicula, String nombre, int asientos, float total) {
+        int num;
+        do {
+            num = generarID();
+        } while (ids.contains(num));
+        
+        this.id = num;
         this.sala = sala;
         this.pelicula = pelicula;
         this.nombre = nombre;
         this.asientos = asientos;
         this.total = total;
+    }
+    
+    private int generarID() {
+        Random ran = new Random();
+        return ran.nextInt(100000);
     }
 
     public void setSala(int sala) {
@@ -55,6 +70,10 @@ public class Datos implements Serializable, Comparable<Datos>{
     public void setTotal(float total) {
         this.total = total;
     }
+    
+    public void setID(int id) {
+        this.id = id;
+    }
 
     public int getSala() {
         return sala;
@@ -87,10 +106,14 @@ public class Datos implements Serializable, Comparable<Datos>{
     public float getTotal() {
         return total;
     }
+    
+    public int getID() {
+        return id;
+    }
 
     @Override
     public int compareTo(Datos o) {
-        return this.getNombre().compareToIgnoreCase(o.getNombre());
+        return this.getID()-o.getID();
     }
 
 }
@@ -118,6 +141,15 @@ class OrdenarPorSala implements Comparator<Datos> {
     @Override
     public int compare(Datos a, Datos e) {
         return a.getSala()-e.getSala();
+    }
+    
+}
+
+class OrdenarPorID implements Comparator<Datos> {
+
+    @Override
+    public int compare(Datos a, Datos e) {
+        return a.getID()-e.getID();
     }
     
 }

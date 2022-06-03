@@ -49,7 +49,7 @@ public class GUI extends javax.swing.JFrame implements Runnable {
 
     private void initModelTable() {
         dft = new DefaultTableModel();
-        String cabecera[] = {"Sala", "Pelicula", "Nombre", "Cantidad"};
+        String cabecera[] = {"ID","Sala", "Pelicula", "Nombre", "Cantidad"};
         dft.setColumnIdentifiers(cabecera);
         table.setModel(dft);
     }
@@ -59,15 +59,15 @@ public class GUI extends javax.swing.JFrame implements Runnable {
         dft.setRowCount(0);
 
         for (Datos dato : sala) {
-            elementos[0] = dato.getSala();
-            elementos[1] = dato.getPelicula();
-            elementos[2] = dato.getNombre();
-            elementos[3] = dato.getAsientos();
+            elementos[0] = dato.getID();
+            elementos[1] = dato.getSala();
+            elementos[2] = dato.getPelicula();
+            elementos[3] = dato.getNombre();
+            elementos[4] = dato.getAsientos();
             dft.addRow(elementos);
         }
         table.setModel(dft);
         validate();
-
     }
 
     /**
@@ -145,7 +145,7 @@ public class GUI extends javax.swing.JFrame implements Runnable {
         jLabel2.setBounds(10, 20, 100, 17);
 
         comboBox2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        comboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sala", "Pelicula", "Nombre", "Asientos" }));
+        comboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Sala", "Pelicula", "Nombre", "Asientos" }));
         comboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBox2ActionPerformed(evt);
@@ -170,8 +170,10 @@ public class GUI extends javax.swing.JFrame implements Runnable {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         ArrayList<Datos> array = new ArrayList<>();
-        int pos = Collections.binarySearch(aux, new Datos(0, "", jTextField1.getText(), 0, 0));
-        if (pos!=-1)
+        Datos dato = new Datos(0, "", "", 0, 0);
+        dato.setID(Integer.parseInt(jTextField1.getText()));
+        int pos = Collections.binarySearch(aux,dato);
+        if (pos>-1)
             array.add(aux.get(pos));
         updateTable(array);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -180,7 +182,7 @@ public class GUI extends javax.swing.JFrame implements Runnable {
         if (comboBox2.getSelectedItem().equals("Nombre")) {
             Collections.sort(aux);
             updateTable(aux);
-            jButton1.setEnabled(true);
+            jButton1.setEnabled(false);
         } else if (comboBox2.getSelectedItem().equals("Asientos")) {
             Collections.sort(aux,new OrdenarPorAsiento());
             updateTable(aux);
@@ -189,10 +191,14 @@ public class GUI extends javax.swing.JFrame implements Runnable {
             Collections.sort(aux,new OrdenarPorPelicula());
             updateTable(aux);
             jButton1.setEnabled(false);
-        } else {
+        } else if (comboBox2.getSelectedItem().equals("Sala")){
             Collections.sort(aux,new OrdenarPorSala());
             updateTable(aux);
             jButton1.setEnabled(false);
+        } else {
+            Collections.sort(aux,new OrdenarPorID());
+            updateTable(aux);
+            jButton1.setEnabled(true);
         }
     }//GEN-LAST:event_comboBox2ActionPerformed
 

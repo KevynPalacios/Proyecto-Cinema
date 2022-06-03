@@ -37,7 +37,7 @@ public class Cliente extends javax.swing.JFrame implements Printable {
     int anchoBoton = 30;
     int ejeX = 170;
     int ejeY = 330;
-    String asientos;
+    String asientos = "";
 
     public JToggleButton[][] JTBotones = new JToggleButton[filas][columnas];
 
@@ -93,7 +93,7 @@ public class Cliente extends javax.swing.JFrame implements Printable {
                         if (JTBotones[i][j].isSelected()) {
                             //JTBotones[i][j].setBackground(Color.red);
                             seleccionarAsiento(JTBotones[i][j]);
-                            asientos += ("" + JTBotones[i][j].getText() + ", ");
+                            asientos += ("" + JTBotones[i][j].getText() + ((datos.c != 0) ? ", " : ""));
                         }
                     }
                 }
